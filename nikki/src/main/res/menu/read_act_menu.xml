@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/search_text"
+        android:icon="@mipmap/search_text_icon"
+        android:title="文字検索"
+        app:showAsAction="always"></item>
+    <item
+        android:id="@+id/change_password"
+        android:icon="@mipmap/change_password_icon"
+        android:title="パスワードを設置"
+        app:showAsAction="always"></item>
+
+</menu>

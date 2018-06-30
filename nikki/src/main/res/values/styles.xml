@@ -1,0 +1,55 @@
+<resources>
+    <!--<item name="android:windowEnterAnimation">@anim/dialog_enter_anim</item>-->
+    <!--<item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>-->
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/transparent_background</item>
+        <item name="colorPrimaryDark">@color/transparent_background</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:title">@null</item>
+        <item name="android:windowBackground">@color/transparent_ban_background</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
+    <!--<item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>-->
+
+    <style name="MainActTheme" parent="Theme.AppCompat.Dialog">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:title">@null</item>
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>
+        <item name="android:windowBackground">@color/transparent_background</item>
+    </style>
+
+    <style name="horizonal_line">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">#e7dfdf</item>
+        <item name="android:alpha">0.3</item>
+        <item name="android:layout_marginLeft">@dimen/card_margin</item>
+        <item name="android:layout_marginRight">@dimen/card_margin</item>
+    </style>
+
+    <style name="dialog_anim" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>
+    </style>
+
+    <style name="input_area_layout">
+        <item name="android:layout_marginRight">@dimen/card_margin</item>
+        <item name="android:layout_marginLeft">@dimen/card_margin</item>
+        <item name="android:layout_marginTop">@dimen/card_margin</item>
+        <item name="android:gravity">start|top</item>
+        <item name="android:paddingRight">@dimen/text_view_padding</item>
+        <item name="android:paddingLeft">@dimen/text_view_padding</item>
+        <item name="android:paddingTop">@dimen/text_view_padding</item>
+
+    </style>
+</resources>

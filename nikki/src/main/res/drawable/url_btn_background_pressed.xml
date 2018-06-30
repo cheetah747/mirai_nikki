@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners
+        android:topRightRadius="@dimen/card_radius"></corners>
+    <solid android:color="#82ccec"></solid>
+   <!-- <size
+        android:height="@dimen/button_height"></size>-->
+    <!--android:width="300dp"-->
+
+</shape>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="200dp"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:context=".activity.MainActivity.view.MainActivity">
+
+    <EditText
+        android:id="@+id/text"
+        style="@style/input_area_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:alpha="0.3"
+        android:background="@drawable/write_background"
+        android:text="@null"
+        android:textColor="#bcadad"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/text_view_size" />
+
+    <ImageView
+        android:id="@+id/fingerLogo"
+        style="@style/input_area_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:alpha="0.3"
+        android:background="@drawable/write_background"
+        android:padding="25dp"
+        android:src="@drawable/finger_print_logo"
+        android:text="@null"
+        android:textColor="#bcadad"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/text_view_size"
+        android:visibility="gone" />
+
+    <View style="@style/horizonal_line"></View>
+
+    <Button
+        android:id="@+id/commit_button"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/card_margin"
+        android:layout_marginEnd="@dimen/card_margin"
+        android:layout_marginStart="@dimen/card_margin"
+        android:alpha="0.3"
+        android:background="@drawable/button_selector"
+        android:gravity="center"
+        android:padding="0dp"
+        android:text="@string/input_button"
+        android:textColor="#000000"
+        android:textSize="@dimen/button_text_size" />
+</LinearLayout>

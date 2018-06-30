@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">未来日记</string>
+    <string name="input_button">書き込み</string>
+    <string name="compose_disabled_message1">無効</string>
+    <string name="compose_shortcut_long_label1">未来チェック</string>
+    <string name="compose_shortcut_short_label1">未来チェック</string>
+    <string name="textcache_shortcut_paste">ペースト</string>
+    <string name="textcache_shortcut_clear">クリア</string>
+</resources>

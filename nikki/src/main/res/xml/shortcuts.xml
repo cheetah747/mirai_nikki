@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher_circle"
+        android:shortcutDisabledMessage="@string/compose_disabled_message1"
+        android:shortcutId="compose"
+        android:shortcutLongLabel="@string/compose_shortcut_long_label1"
+        android:shortcutShortLabel="@string/compose_shortcut_short_label1">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.sibyl.mirainikki.activity.MainActivity.view.ShortcutMainAct"
+            android:targetPackage="com.sibyl.mirainikki" />
+        <!--<categories android:name="android.shortcut.conversation" />-->
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher_paste_circle"
+        android:shortcutDisabledMessage="@string/compose_disabled_message1"
+        android:shortcutId="textcache"
+        android:shortcutLongLabel="@string/textcache_shortcut_paste"
+        android:shortcutShortLabel="@string/textcache_shortcut_paste">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.sibyl.mirainikki.activity.MainActivity.view.TextCacheAct"
+            android:targetPackage="com.sibyl.mirainikki" />
+        <!--<categories android:name="android.shortcut.conversation" />-->
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher_clear_circle"
+        android:shortcutDisabledMessage="@string/compose_disabled_message1"
+        android:shortcutId="cleartextcache"
+        android:shortcutLongLabel="@string/textcache_shortcut_clear"
+        android:shortcutShortLabel="@string/textcache_shortcut_clear">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.sibyl.mirainikki.activity.MainActivity.view.ClearTextCacheAct"
+            android:targetPackage="com.sibyl.mirainikki" />
+    <!--<categories android:name="android.shortcut.conversation" />-->
+    </shortcut>
+    <!-- Specify more shortcuts here. -->
+</shortcuts>
