@@ -2,6 +2,19 @@
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
         android:enabled="true"
+        android:icon="@mipmap/ic_launcher_download"
+        android:shortcutDisabledMessage="@string/compose_disabled_message1"
+        android:shortcutId="download"
+        android:shortcutLongLabel="@string/download"
+        android:shortcutShortLabel="@string/download">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.sibyl.mirainikki.activity.MainActivity.view.JumpDownloadAct"
+            android:targetPackage="com.sibyl.mirainikki" />
+        <!--<categories android:name="android.shortcut.conversation" />-->
+    </shortcut>
+    <shortcut
+        android:enabled="true"
         android:icon="@mipmap/ic_launcher_circle"
         android:shortcutDisabledMessage="@string/compose_disabled_message1"
         android:shortcutId="compose"
@@ -39,7 +52,7 @@
             android:action="android.intent.action.VIEW"
             android:targetClass="com.sibyl.mirainikki.activity.MainActivity.view.ClearTextCacheAct"
             android:targetPackage="com.sibyl.mirainikki" />
-    <!--<categories android:name="android.shortcut.conversation" />-->
+        <!--<categories android:name="android.shortcut.conversation" />-->
     </shortcut>
     <!-- Specify more shortcuts here. -->
 </shortcuts>

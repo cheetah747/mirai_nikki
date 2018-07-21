@@ -47,19 +47,23 @@
         <activity
             android:name=".activity.ReadActivity.view.ReadActivity"
             android:excludeFromRecents="true"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.MainActivity.view.ShortcutMainAct"
             android:excludeFromRecents="true"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.MainActivity.view.TextCacheAct"
             android:excludeFromRecents="true"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.MainActivity.view.ClearTextCacheAct"
             android:excludeFromRecents="true"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.MainActivity.view.JumpDownloadAct"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.MainActivity.view.UrlOpenerActivity"
             android:excludeFromRecents="true"
