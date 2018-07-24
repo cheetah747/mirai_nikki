@@ -20,7 +20,7 @@ class JumpDownloadAct : BaseActivity() {
     fun jump() {
         try {
             startActivity(Intent().apply {
-                setClassName("com.sibyl.mydownloadmanager", "com.sibyl.sasukedownloadmanager.activity.MainActivity")
+                setClassName("com.sibyl.sasukedownloadmanager", "com.sibyl.sasukedownloadmanager.activity.MainActivity")
             })
         }catch (e: ActivityNotFoundException){
             MyToast.show(this@JumpDownloadAct, "G Downloader は見つからなかった", Toast.LENGTH_SHORT)
