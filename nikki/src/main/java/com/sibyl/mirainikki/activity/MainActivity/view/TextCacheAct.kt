@@ -42,7 +42,7 @@ class TextCacheAct: BaseActivity() {
             FileData.createMyFile(this@TextCacheAct ,FileData.getMiraiCacheFile())
             try {
                 val writer = BufferedWriter(FileWriter(FileData.getMiraiCacheFile(), false))
-                writer.write(text)
+                writer.write("[InternetShortcut]\nURL=" + text)
                 writer.flush()
                 writer.close()
                 uiThread {

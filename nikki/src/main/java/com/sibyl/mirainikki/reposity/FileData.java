@@ -10,6 +10,8 @@ import com.sibyl.mirainikki.MyToast.MyToast;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Sasuke on 2016/5/10.
@@ -92,7 +94,11 @@ public class FileData {
     }
 
     public static File getMiraiCacheFile(){
-        return miraiCacheFile;
+//        return miraiCacheFile;
+        return new File(sdFile.getAbsolutePath().toString() + File.separator + "0カード"
+                +File.separator + "MiraiCache"
+                + (new SimpleDateFormat("yyyy-MM-dd_HHmmss").format(new Date()))
+                +".url");
     }
 
     public static File getRootFile() {
