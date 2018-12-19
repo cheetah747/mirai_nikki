@@ -4,7 +4,7 @@
     <string name="compose_disabled_message1">無効</string>
     <string name="compose_shortcut_long_label1">未来チェック</string>
     <string name="compose_shortcut_short_label1">未来チェック</string>
-    <string name="textcache_shortcut_paste">ペースト</string>
+    <string name="textcache_shortcut_paste">ブックマーク</string>
     <string name="textcache_shortcut_clear">クリア</string>
     <string name="download">ダウンロード</string>
 

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
-    <shortcut
-        android:enabled="true"
-        android:icon="@mipmap/ic_launcher_download"
-        android:shortcutDisabledMessage="@string/compose_disabled_message1"
-        android:shortcutId="download"
-        android:shortcutLongLabel="@string/download"
-        android:shortcutShortLabel="@string/download">
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:targetClass="com.sibyl.mirainikki.activity.MainActivity.view.JumpDownloadAct"
-            android:targetPackage="com.sibyl.mirainikki" />
-        <!--<categories android:name="android.shortcut.conversation" />-->
-    </shortcut>
+    <!--<shortcut-->
+        <!--android:enabled="true"-->
+        <!--android:icon="@mipmap/ic_launcher_download"-->
+        <!--android:shortcutDisabledMessage="@string/compose_disabled_message1"-->
+        <!--android:shortcutId="download"-->
+        <!--android:shortcutLongLabel="@string/download"-->
+        <!--android:shortcutShortLabel="@string/download">-->
+        <!--<intent-->
+            <!--android:action="android.intent.action.VIEW"-->
+            <!--android:targetClass="com.sibyl.mirainikki.activity.MainActivity.view.JumpDownloadAct"-->
+            <!--android:targetPackage="com.sibyl.mirainikki" />-->
+        <!--&lt;!&ndash;<categories android:name="android.shortcut.conversation" />&ndash;&gt;-->
+    <!--</shortcut>-->
     <shortcut
         android:enabled="true"
         android:icon="@mipmap/ic_launcher_circle"
@@ -29,7 +29,7 @@
 
     <shortcut
         android:enabled="true"
-        android:icon="@mipmap/ic_launcher_paste_circle"
+        android:icon="@mipmap/ic_launcher_collect_circle"
         android:shortcutDisabledMessage="@string/compose_disabled_message1"
         android:shortcutId="textcache"
         android:shortcutLongLabel="@string/textcache_shortcut_paste"
