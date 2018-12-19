@@ -86,7 +86,7 @@ class UrlOpenerActivity: BaseActivity(){
             e.printStackTrace()
         }
 
-        url = url?.replaceFirst("\\s", "")?.replace("[InternetShortcut]", "")?.replace("URL=","")?.replace("\r\n","")
+        url = url?.replaceFirst("\\s", "")?.replace("[InternetShortcut]", "")?.replace("URL=","")?.replace("\r\n","")?.replace("\n","")
         Log.d("SasukeLog", "readUrlFromFile()成功解析出Url")
         return url
 
