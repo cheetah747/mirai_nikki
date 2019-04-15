@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#138dd8</color>
     <color name="colorPrimaryDark">#138dd8</color>
-    <color name="colorAccent">#bcadad</color>
+    <color name="colorAccent">#138dd8</color>
     <color name="transparent_background">#00000000</color>
     <color name="transparent_ban_background">#BF000000</color>
     <color name="white">#fff</color>

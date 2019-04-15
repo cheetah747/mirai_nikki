@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -180,7 +181,7 @@ public class MainActivity extends BaseActivity implements DialogContract.View {
     /**
      * 在存在多条记录的时候，显示列表来选择。
      */
-    private void showYearListDialog(final File [] fileList){
+    private void showYearListDialog(final File[] fileList) {
         View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.year_list_layout, null);
         RecyclerView yearList = view.findViewById(R.id.yearListRv);
         yearList.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
@@ -188,11 +189,10 @@ public class MainActivity extends BaseActivity implements DialogContract.View {
             @Override
             public Unit invoke(File file) {
                 mPre.openNikkiFile(file);//点击跳转
-                finish();
                 return null;
             }
         }));
-        new AlertDialog.Builder(MainActivity.this, android.R.style.Theme_Material_Light_Dialog_Alert)
+        AlertDialog dialog = new AlertDialog.Builder(MainActivity.this, android.R.style.Theme_Material_Light_Dialog_Alert)
                 .setView(view)
                 .setPositiveButton("キャンセル", new DialogInterface.OnClickListener() {
                     @Override
@@ -200,8 +200,9 @@ public class MainActivity extends BaseActivity implements DialogContract.View {
 
                         finish();
                     }
-                })
-                .show();
+                }).create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE);
     }
 
     /**
