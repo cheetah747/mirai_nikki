@@ -202,7 +202,7 @@ public class MainActivity extends BaseActivity implements DialogContract.View {
                     }
                 }).create();
         dialog.show();
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE);
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.RED);
     }
 
     /**

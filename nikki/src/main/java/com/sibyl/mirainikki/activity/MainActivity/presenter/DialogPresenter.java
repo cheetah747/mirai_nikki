@@ -20,6 +20,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Created by Sasuke on 2016/5/10.
@@ -65,6 +67,12 @@ public class DialogPresenter implements DialogContract.Presenter{
             }
         });
 
+        Arrays.sort(fileList, new Comparator<File>() {
+            @Override
+            public int compare(File file0, File file1) {
+                return file1.getName().compareTo(file0.getName());
+            }
+        });
         return fileList;
     }
 
