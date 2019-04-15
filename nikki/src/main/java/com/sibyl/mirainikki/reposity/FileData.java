@@ -18,10 +18,11 @@ import java.util.Date;
  */
 public class FileData {
     public static File sdFile;
-    public static File nikkiFile;
+    public static File nikkiFile;//应该是当前年份的mirai文件
     public static File miraiCacheFile;//用来存系统剪切板里的文字的，写到txt里，然后再把txt用solid explorer传到电脑，实现手机->电脑的剪切板同步。
     public static File rootFile;
     public static String tail = ".mirai";
+    public static String fileProviderAuth = "com.sibyl.mirainikki.fileProvider";
 
     public static void initFilePath(){
         try {

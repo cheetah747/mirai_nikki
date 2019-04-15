@@ -17,7 +17,9 @@ import com.sibyl.mirainikki.reposity.FileData;
 import com.sibyl.mirainikki.reposity.TimeData;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 
 /**
  * Created by Sasuke on 2016/5/10.
@@ -27,6 +29,7 @@ public class DialogPresenter implements DialogContract.Presenter{
     MyApplication app;
     FingerprintManagerCompat fingerManager;
     CancellationSignal cancelSignal;//取消指纹验证的监听
+    File [] fileList;//所有文件的列表
 
     public DialogPresenter(DialogContract.View view) {
         this.mView = view;
@@ -54,14 +57,26 @@ public class DialogPresenter implements DialogContract.Presenter{
     }
 
     @Override
-    public void openNikkiFile() {
+    public File [] getNikkiList() {
+        fileList = FileData.rootFile.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String fileName) {
+                return fileName.endsWith(".mirai");
+            }
+        });
+
+        return fileList;
+    }
+
+    @Override
+    public void openNikkiFile(File file) {
         Intent intent = new Intent("android.intent.action.VIEW");
 //        intent.addCategory("android.intent.category.DEFAULT");
         intent.addCategory(Intent.CATEGORY_DEFAULT);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        Uri uri = Uri.fromFile(FileData.getNikkiFile());
-        Uri uri = FileProvider.getUriForFile(app, app.getApplicationContext().getPackageName() + ".fileProvider", FileData.getNikkiFile());
+        Uri uri = FileProvider.getUriForFile(app, FileData.fileProviderAuth, FileData.getNikkiFile());
         intent.setDataAndType(uri, "text/plain");
         mView.start2Activity(intent);
     }

@@ -8,7 +8,7 @@ buildscript {
         maven { url 'https://dl.google.com/dl/android/maven2/' }//解决上面那个maven.google.com需要翻墙的问题。
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0-alpha01'
+        classpath 'com.android.tools.build:gradle:3.3.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong

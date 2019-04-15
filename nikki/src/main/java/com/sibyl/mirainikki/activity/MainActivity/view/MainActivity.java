@@ -1,6 +1,8 @@
 package com.sibyl.mirainikki.activity.MainActivity.view;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
@@ -15,7 +17,10 @@ import com.sibyl.mirainikki.R;
 import com.sibyl.mirainikki.activity.MainActivity.presenter.DialogContract;
 import com.sibyl.mirainikki.activity.MainActivity.presenter.DialogPresenter;
 import com.sibyl.mirainikki.base.BaseActivity;
+import com.sibyl.mirainikki.reposity.FileData;
 import com.sibyl.mirainikki.util.Constant;
+
+import java.io.File;
 
 /**
  * 主界面
@@ -132,9 +137,32 @@ public class MainActivity extends BaseActivity implements DialogContract.View {
             @Override
             public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                mPre.openNikkiFile();
+//                mPre.openNikkiFile();
+                File[] fileList = mPre.getNikkiList();//显示年份列表，用户可以选择查看哪一年的记录。
+                //如果没有日记
+                if (fileList.length == 0){
+                    MyToast.show(MainActivity.this,"空っぽ",Toast.LENGTH_LONG);
+                    finish();
+                }
+                //如果有一条日记
+                if (fileList.length == 1){
+                    mPre.openNikkiFile(FileData.nikkiFile);//如果只有一个文件，那就直接打开就完事了
+                    finish();
+                }
+                //如果大于一条，那就显示列表，供选择哪一年
+                if (fileList.length > 1){
+                    new AlertDialog.Builder(MainActivity.this,android.R.style.Theme_Material_Light_Dialog_Alert)
+                            .setPositiveButton("キャンセル", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    finish();
+                                }
+                            })
+                            .show();
+                }
                 switchFingerMode(false);//验证对了，就关闭指纹验证
-                finish();
+
             }
 
             @Override

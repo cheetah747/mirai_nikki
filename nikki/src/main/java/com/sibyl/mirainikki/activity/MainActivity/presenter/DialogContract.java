@@ -8,6 +8,8 @@ import android.support.v4.os.CancellationSignal;
 import com.sibyl.mirainikki.base.BasePresenter;
 import com.sibyl.mirainikki.base.BaseView;
 
+import java.io.File;
+
 /**
  * Created by Sasuke on 2016/5/8.
  */
@@ -26,7 +28,9 @@ public interface DialogContract {
 
         FingerprintManagerCompat getFingerManager(Context context);
 
-        void openNikkiFile();
+        void openNikkiFile(File file);
+
+        File [] getNikkiList();
 
         CancellationSignal getCancelSignal();
     }
