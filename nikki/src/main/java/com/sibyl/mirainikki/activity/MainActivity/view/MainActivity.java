@@ -6,6 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,11 +19,15 @@ import com.sibyl.mirainikki.MyToast.MyToast;
 import com.sibyl.mirainikki.R;
 import com.sibyl.mirainikki.activity.MainActivity.presenter.DialogContract;
 import com.sibyl.mirainikki.activity.MainActivity.presenter.DialogPresenter;
+import com.sibyl.mirainikki.activity.MainActivity.ui.YearListAdapter;
 import com.sibyl.mirainikki.base.BaseActivity;
 import com.sibyl.mirainikki.reposity.FileData;
 import com.sibyl.mirainikki.util.Constant;
 
 import java.io.File;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 /**
  * 主界面
@@ -47,7 +54,7 @@ public class MainActivity extends BaseActivity implements DialogContract.View {
 
     @Override
     public void init() {
-        if(getIntent().getBooleanExtra(Constant.IS_FROM_SHORTCUT,false)){
+        if (getIntent().getBooleanExtra(Constant.IS_FROM_SHORTCUT, false)) {
             checkFinger();
         }
     }
@@ -61,7 +68,7 @@ public class MainActivity extends BaseActivity implements DialogContract.View {
     public void getView() {
         text = (EditText) findViewById(R.id.text);
         submitBtn = (Button) findViewById(R.id.commit_button);
-        fingerLogo = (ImageView)findViewById(R.id.fingerLogo);
+        fingerLogo = (ImageView) findViewById(R.id.fingerLogo);
     }
 
     public void setListener() {
@@ -119,14 +126,14 @@ public class MainActivity extends BaseActivity implements DialogContract.View {
      * 弹出指纹验证对话框，验证成功就打开文件
      */
     @TargetApi(23)
-    public void checkFinger(){
+    public void checkFinger() {
         switchFingerMode(true);//切换成指纹验证模式
         mPre.getFingerManager(this).authenticate(null, 0, mPre.getCancelSignal(), new FingerprintManagerCompat.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errMsgId, CharSequence errString) {//指纹全错，停止验证
                 super.onAuthenticationError(errMsgId, errString);
                 switchFingerMode(false);//关闭指纹验证模式
-                MyToast.show(MainActivity.this,"指纹验证失败", Toast.LENGTH_SHORT);
+                MyToast.show(MainActivity.this, "指纹验证失败", Toast.LENGTH_SHORT);
             }
 
             @Override
@@ -140,26 +147,18 @@ public class MainActivity extends BaseActivity implements DialogContract.View {
 //                mPre.openNikkiFile();
                 File[] fileList = mPre.getNikkiList();//显示年份列表，用户可以选择查看哪一年的记录。
                 //如果没有日记
-                if (fileList.length == 0){
-                    MyToast.show(MainActivity.this,"空っぽ",Toast.LENGTH_LONG);
+                if (fileList.length == 0) {
+                    MyToast.show(MainActivity.this, "空っぽ", Toast.LENGTH_LONG);
                     finish();
                 }
                 //如果有一条日记
-                if (fileList.length == 1){
+                if (fileList.length == 1) {
                     mPre.openNikkiFile(FileData.nikkiFile);//如果只有一个文件，那就直接打开就完事了
                     finish();
                 }
                 //如果大于一条，那就显示列表，供选择哪一年
-                if (fileList.length > 1){
-                    new AlertDialog.Builder(MainActivity.this,android.R.style.Theme_Material_Light_Dialog_Alert)
-                            .setPositiveButton("キャンセル", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-
-                                    finish();
-                                }
-                            })
-                            .show();
+                if (fileList.length > 1) {
+                    showYearListDialog(fileList);
                 }
                 switchFingerMode(false);//验证对了，就关闭指纹验证
 
@@ -168,7 +167,7 @@ public class MainActivity extends BaseActivity implements DialogContract.View {
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
-                MyToast.show(MainActivity.this,"指纹验证失败", Toast.LENGTH_SHORT);
+                MyToast.show(MainActivity.this, "指纹验证失败", Toast.LENGTH_SHORT);
             }
         }, null);
     }
@@ -179,16 +178,44 @@ public class MainActivity extends BaseActivity implements DialogContract.View {
     }
 
     /**
+     * 在存在多条记录的时候，显示列表来选择。
+     */
+    private void showYearListDialog(final File [] fileList){
+        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.year_list_layout, null);
+        RecyclerView yearList = view.findViewById(R.id.yearListRv);
+        yearList.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
+        yearList.setAdapter(new YearListAdapter(this, fileList, new Function1<File, Unit>() {
+            @Override
+            public Unit invoke(File file) {
+                mPre.openNikkiFile(file);//点击跳转
+                finish();
+                return null;
+            }
+        }));
+        new AlertDialog.Builder(MainActivity.this, android.R.style.Theme_Material_Light_Dialog_Alert)
+                .setView(view)
+                .setPositiveButton("キャンセル", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        finish();
+                    }
+                })
+                .show();
+    }
+
+    /**
      * 切换是否是指纹验证模式
+     *
      * @param isFingerMode
      */
-    public void switchFingerMode(boolean isFingerMode){
-        if(isFingerMode){
+    public void switchFingerMode(boolean isFingerMode) {
+        if (isFingerMode) {
             fingerLogo.setVisibility(View.VISIBLE);
             text.setVisibility(View.GONE);
             text.setText("");
             submitBtn.setText("指押してください");
-        }else{
+        } else {
             mPre.getCancelSignal().cancel();//取消指纹验证
             fingerLogo.setVisibility(View.GONE);
             text.setVisibility(View.VISIBLE);

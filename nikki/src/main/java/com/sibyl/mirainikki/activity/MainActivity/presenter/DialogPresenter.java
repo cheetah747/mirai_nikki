@@ -76,7 +76,7 @@ public class DialogPresenter implements DialogContract.Presenter{
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        Uri uri = Uri.fromFile(FileData.getNikkiFile());
-        Uri uri = FileProvider.getUriForFile(app, FileData.fileProviderAuth, FileData.getNikkiFile());
+        Uri uri = FileProvider.getUriForFile(app, FileData.fileProviderAuth, file);
         intent.setDataAndType(uri, "text/plain");
         mView.start2Activity(intent);
     }
