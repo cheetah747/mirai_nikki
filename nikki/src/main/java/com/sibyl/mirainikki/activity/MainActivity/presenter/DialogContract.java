@@ -2,8 +2,8 @@ package com.sibyl.mirainikki.activity.MainActivity.presenter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
-import android.support.v4.os.CancellationSignal;
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
+import androidx.core.os.CancellationSignal;
 
 import com.sibyl.mirainikki.base.BasePresenter;
 import com.sibyl.mirainikki.base.BaseView;

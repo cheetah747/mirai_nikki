@@ -3,11 +3,12 @@ package com.sibyl.mirainikki.activity.MainActivity.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.content.FileProvider;
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
-import android.support.v4.os.CancellationSignal;
 import android.text.TextUtils;
 import android.widget.Toast;
+
+import androidx.core.content.FileProvider;
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
+import androidx.core.os.CancellationSignal;
 
 import com.sibyl.mirainikki.MyApplication.MyApplication;
 import com.sibyl.mirainikki.MyToast.MyToast;

@@ -20,7 +20,7 @@
         android:theme="@style/AppTheme">
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.sibyl.mirainikki.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -31,7 +31,7 @@
         </provider>
 
         <activity
-            android:name=".activity.MainActivity.view.MainActivity"
+            android:name=".activity.ChatActivity.view.ChatActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:theme="@style/MainActTheme">
@@ -44,41 +44,46 @@
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
+        <!--MainActivityはもう使わない、ChatActivityは交代してやる-->
+        <activity
+            android:name=".activity.MainActivity.view.MainActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ReadActivity.view.ReadActivity"
             android:excludeFromRecents="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MainActivity.view.ShortcutMainAct"
             android:excludeFromRecents="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MainActivity.view.TextCacheAct"
             android:excludeFromRecents="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MainActivity.view.ClearTextCacheAct"
             android:excludeFromRecents="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MainActivity.view.JumpDownloadAct"
             android:excludeFromRecents="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MainActivity.view.UrlOpenerActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="portrait">
             <intent-filter tools:ignore="AppLinkUrlError">
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:mimeType="text/plain"/>
-                <data android:mimeType="text/html"/>
-                <data android:mimeType="text/xml"/>
-                <data android:mimeType="application/xhtml+xml"/>
-                <data android:mimeType="application/vnd.wap.xhtml+xml"/>
+                <data android:mimeType="text/plain" />
+                <data android:mimeType="text/html" />
+                <data android:mimeType="text/xml" />
+                <data android:mimeType="application/xhtml+xml" />
+                <data android:mimeType="application/vnd.wap.xhtml+xml" />
             </intent-filter>
         </activity>
     </application>
