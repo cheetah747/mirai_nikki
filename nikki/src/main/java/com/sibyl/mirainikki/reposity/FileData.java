@@ -5,7 +5,6 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.sibyl.mirainikki.MyApplication.MyApplication;
 import com.sibyl.mirainikki.MyToast.MyToast;
 
 import java.io.File;
@@ -29,7 +28,7 @@ public class FileData {
             /*sdFile = new File(Environment.getExternalStorageDirectory().getCanonicalPath().toString()
             +"/Android/data");*/
             sdFile = new File(Environment.getExternalStorageDirectory().getCanonicalPath().toString());
-            rootFile = MyApplication.getInstance().getFilesDir();
+            rootFile = new File(sdFile.getAbsolutePath() + File.separator + "0カード/しりょう/MIRAINIKKI/");
         } catch (IOException e) {
             e.printStackTrace();
         }

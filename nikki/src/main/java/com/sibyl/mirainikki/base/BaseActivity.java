@@ -5,10 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.WindowManager;
 
 import com.github.dfqin.grantor.PermissionListener;
 import com.github.dfqin.grantor.PermissionsUtil;
+import com.sibyl.mirainikki.MyApplication.MyApplication;
+import com.sibyl.mirainikki.reposity.FileData;
 
 /**
  * Created by Sasuke on 2016/6/19.
@@ -18,8 +19,16 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //设置模糊玻璃
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND, WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND, WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
         requestPermissions();
+        MyApplication.getInstance().executor.submit(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        FileData.initFilePath();
+                    }
+                }
+        );
     }
 
     public void requestPermissions() {

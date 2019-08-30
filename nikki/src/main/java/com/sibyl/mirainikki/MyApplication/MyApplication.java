@@ -2,8 +2,6 @@ package com.sibyl.mirainikki.MyApplication;
 
 import android.app.Application;
 
-import com.sibyl.mirainikki.reposity.FileData;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -18,7 +16,7 @@ public class MyApplication extends Application{
         super.onCreate();
         app = this;
         app.executor = Executors.newCachedThreadPool();//启动的时候就建立线程池
-        FileData.initFilePath();
+
         //int progress = Runtime.getRuntime().availableProcessors();
         //Log.d("SasukeLog",this.toString()+"可用线程数："+progress);
        //app.executor = Executors.newFixedThreadPool(progress*2);//开progress个固定线程
