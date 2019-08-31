@@ -11,19 +11,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sibyl.mirainikki.MyToast.MyToast;
 import com.sibyl.mirainikki.R;
 import com.sibyl.mirainikki.activity.MainActivity.presenter.DialogContract;
 import com.sibyl.mirainikki.activity.MainActivity.presenter.DialogPresenter;
 import com.sibyl.mirainikki.activity.MainActivity.ui.YearListAdapter;
 import com.sibyl.mirainikki.base.BaseActivity;
-import com.sibyl.mirainikki.reposity.FileData;
 import com.sibyl.mirainikki.util.Constant;
 
 import java.io.File;
@@ -130,48 +126,49 @@ public class MainActivity extends BaseActivity implements DialogContract.View {
     @TargetApi(23)
     public void checkFinger() {
         switchFingerMode(true);//切换成指纹验证模式
-        mPre.getFingerManager(this).authenticate(null, 0, mPre.getCancelSignal(), new FingerprintManagerCompat.AuthenticationCallback() {
-            @Override
-            public void onAuthenticationError(int errMsgId, CharSequence errString) {//指纹全错，停止验证
-                super.onAuthenticationError(errMsgId, errString);
-                switchFingerMode(false);//关闭指纹验证模式
-                MyToast.show(MainActivity.this, "指纹验证失败", Toast.LENGTH_SHORT);
-            }
-
-            @Override
-            public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
-                super.onAuthenticationHelp(helpMsgId, helpString);
-            }
-
-            @Override
-            public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
-                super.onAuthenticationSucceeded(result);
-//                mPre.openNikkiFile();
-                File[] fileList = mPre.getNikkiList();//显示年份列表，用户可以选择查看哪一年的记录。
-                //如果没有日记
-                if (fileList.length == 0) {
-                    MyToast.show(MainActivity.this, "空っぽ", Toast.LENGTH_LONG);
-                    finish();
-                }
-                //如果有一条日记
-                if (fileList.length == 1) {
-                    mPre.openNikkiFile(FileData.nikkiFile);//如果只有一个文件，那就直接打开就完事了
-                    finish();
-                }
-                //如果大于一条，那就显示列表，供选择哪一年
-                if (fileList.length > 1) {
-                    showYearListDialog(fileList);
-                }
-                switchFingerMode(false);//验证对了，就关闭指纹验证
-
-            }
-
-            @Override
-            public void onAuthenticationFailed() {
-                super.onAuthenticationFailed();
-                MyToast.show(MainActivity.this, "指纹验证失败", Toast.LENGTH_SHORT);
-            }
-        }, null);
+        //SasukeTodo 以下注释的地方就是以前写的指纹验证，到时候可以在这里找逻辑。指纹验证参考资料：https://qiita.com/devnokiyo/items/1fa9ad291a6211ef1595
+//        mPre.getFingerManager(this).authenticate(null, 0, mPre.getCancelSignal(), new FingerprintManagerCompat.AuthenticationCallback() {
+//            @Override
+//            public void onAuthenticationError(int errMsgId, CharSequence errString) {//指纹全错，停止验证
+//                super.onAuthenticationError(errMsgId, errString);
+//                switchFingerMode(false);//关闭指纹验证模式
+//                MyToast.show(MainActivity.this, "指纹验证失败", Toast.LENGTH_SHORT);
+//            }
+//
+//            @Override
+//            public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
+//                super.onAuthenticationHelp(helpMsgId, helpString);
+//            }
+//
+//            @Override
+//            public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
+//                super.onAuthenticationSucceeded(result);
+////                mPre.openNikkiFile();
+//                File[] fileList = mPre.getNikkiList();//显示年份列表，用户可以选择查看哪一年的记录。
+//                //如果没有日记
+//                if (fileList.length == 0) {
+//                    MyToast.show(MainActivity.this, "空っぽ", Toast.LENGTH_LONG);
+//                    finish();
+//                }
+//                //如果有一条日记
+//                if (fileList.length == 1) {
+//                    mPre.openNikkiFile(FileData.nikkiFile);//如果只有一个文件，那就直接打开就完事了
+//                    finish();
+//                }
+//                //如果大于一条，那就显示列表，供选择哪一年
+//                if (fileList.length > 1) {
+//                    showYearListDialog(fileList);
+//                }
+//                switchFingerMode(false);//验证对了，就关闭指纹验证
+//
+//            }
+//
+//            @Override
+//            public void onAuthenticationFailed() {
+//                super.onAuthenticationFailed();
+//                MyToast.show(MainActivity.this, "指纹验证失败", Toast.LENGTH_SHORT);
+//            }
+//        }, null);
     }
 
     @Override
