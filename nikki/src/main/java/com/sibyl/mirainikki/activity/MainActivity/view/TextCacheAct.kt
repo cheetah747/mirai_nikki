@@ -8,7 +8,7 @@ import android.widget.Toast
 import com.sibyl.mirainikki.MyToast.MyToast
 import com.sibyl.mirainikki.base.BaseActivity
 import com.sibyl.mirainikki.reposity.FileData
-import org.jetbrains.anko.async
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.io.BufferedWriter
 import java.io.FileWriter
@@ -38,7 +38,7 @@ class TextCacheAct: BaseActivity() {
             return
         }
 
-        async {
+        doAsync {
             FileData.createMyFile(this@TextCacheAct ,FileData.getMiraiCacheFile())
             try {
                 val writer = BufferedWriter(FileWriter(FileData.getMiraiCacheFile(), false))

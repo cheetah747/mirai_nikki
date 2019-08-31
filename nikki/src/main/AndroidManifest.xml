@@ -34,7 +34,7 @@
             android:name=".activity.ChatActivity.view.ChatActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
-            android:theme="@style/MainActTheme">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,7 +44,7 @@
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
-        <!--MainActivityはもう使わない、ChatActivityは交代してやる-->
+        <!--MainActivityはもう使わない、ChatActivityで交代してやる-->
         <activity
             android:name=".activity.MainActivity.view.MainActivity"
             android:excludeFromRecents="true"
