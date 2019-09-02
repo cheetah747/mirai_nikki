@@ -2,21 +2,24 @@
     <!--<item name="android:windowEnterAnimation">@anim/dialog_enter_anim</item>-->
     <!--<item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>-->
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--<style name="NoActionBarAct" parent="Theme.AppCompat.Light.NoActionBar"></style>-->
+
+
     <!--<item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>-->
 
     <!--<style name="MainActTheme" parent="AppTheme">-->
-        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
-        <!--<item name="android:title">Gasai_Yuno</item>-->
+    <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+    <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+    <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+    <!--<item name="colorAccent">@color/colorAccent</item>-->
+    <!--<item name="android:title">Gasai_Yuno</item>-->
     <!--</style>-->
     <!--<item name="android:windowEnterAnimation">@anim/dialog_enter_anim</item>-->
     <!--<item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>-->
