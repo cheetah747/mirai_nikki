@@ -33,7 +33,7 @@
         </provider>
 
         <activity
-            android:name=".activity.ChatActivity.view.ChatActivity"
+            android:name=".activity.chatActivity.view.ChatActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
