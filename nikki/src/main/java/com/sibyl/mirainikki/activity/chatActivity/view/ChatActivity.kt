@@ -3,6 +3,7 @@ package com.sibyl.mirainikki.activity.chatActivity.view
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sibyl.mirainikki.R
 import com.sibyl.mirainikki.activity.chatActivity.model.ChatFactory
 import com.sibyl.mirainikki.activity.chatActivity.model.ChatModel
@@ -17,7 +18,7 @@ import com.sibyl.mirainikki.databinding.ChatActivityBinding
 class ChatActivity : BaseActivity() {
     val binding by lazy { DataBindingUtil.setContentView<ChatActivityBinding>(this, R.layout.chat_activity) }
 
-    val model by lazy { ViewModelProviders.of(this,ChatFactory(ChatRepo())).get(ChatModel::class.java) }
+    val model by lazy { ViewModelProviders.of(this, ChatFactory(ChatRepo())).get(ChatModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +30,10 @@ class ChatActivity : BaseActivity() {
 
     fun bind() {
         binding.toolbarIcon.setOnClickListener { finish() }
+        binding.chatModel = model
+        binding.chatRv.apply {
+            layoutManager = LinearLayoutManager(this@ChatActivity)
+        }
     }
 
     fun init() {
