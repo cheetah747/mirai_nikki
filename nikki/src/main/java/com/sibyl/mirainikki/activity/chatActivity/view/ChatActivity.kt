@@ -1,6 +1,7 @@
 package com.sibyl.mirainikki.activity.chatActivity.view
 
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,9 +33,17 @@ class ChatActivity : BaseActivity() {
     fun bind() {
         binding.toolbarIcon.setOnClickListener { finish() }
         binding.chatModel = model
+        binding.inputEditText.setOnEditorActionListener { textView, actionId, keyEvent ->
+            if(actionId == EditorInfo.IME_ACTION_SEND){
+                model.run { sendMsg() }
+                true
+            }else{
+                false
+            }
+        }
         binding.chatRv.apply {
             layoutManager = LinearLayoutManager(this@ChatActivity)
-            adapter = ChatAdapter(this@ChatActivity,model.dataList.value)
+            adapter = ChatAdapter(this@ChatActivity, model.dataList.value)
         }
     }
 

@@ -66,6 +66,7 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/inputEditText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
@@ -73,10 +74,12 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
+                android:imeOptions="actionSend"
+                android:singleLine="true"
                 android:background="@drawable/input_background"
                 android:paddingLeft="18dp"
                 android:paddingRight="18dp"
-                android:text="" />
+                android:text="@={chatModel.inputText}" />
 
             <ImageButton
                 android:layout_width="wrap_content"

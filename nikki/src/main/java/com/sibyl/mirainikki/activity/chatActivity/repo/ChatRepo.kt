@@ -5,4 +5,9 @@ package com.sibyl.mirainikki.activity.chatActivity.repo
  */
 class ChatRepo {
 
+    /**发送*/
+//    suspend fun sendMsg(msg: String) = suspendCoroutine<Boolean> { conti ->
+//
+//    }
+
 }
