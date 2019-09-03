@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <variable
+            name="time"
+            type="String" />
+
+        <variable
+            name="isMe"
+            type="Boolean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <!--时间-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:textColor="#616161"
+            android:textSize="12sp"
+            android:visibility="@{TextUtils.isEmpty(time)? View.GONE: View.VISIBLE}"
+            tools:text="14:29" />
+
+        <!--isMe气泡布局-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:visibility="@{isMe?View.VISIBLE: View.GONE}">
+
+            <!--聊天气泡容器-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:background="@mipmap/chat_me"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="lsjflsdjflksdjlfskdlfjlsk]jflakslsjflsdjflksdjlfskdlfjlskjflasjdlfkjaslkfdjslakfjlasj" />
+            </LinearLayout>
+
+            <!--头像-->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="4dp"
+                android:src="@mipmap/ic_launcher_circle" />
+        </LinearLayout>
+
+
+        <!--isYou气泡布局-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="left"
+            android:orientation="horizontal"
+            android:visibility="@{isMe?View.GONE: View.VISIBLE}">
+            <!--头像-->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="6dp"
+                android:src="@mipmap/ic_launcher_circle" />
+
+            <!--聊天气泡容器-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="50dp"
+                android:background="@mipmap/chat_you"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="lsjflsdjflksdjlfskdlfjlsk]jflaksjflasjdlfkjaslkfdjslakfjlasj" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
