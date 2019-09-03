@@ -8,6 +8,7 @@ import com.sibyl.mirainikki.R
 import com.sibyl.mirainikki.activity.chatActivity.model.ChatFactory
 import com.sibyl.mirainikki.activity.chatActivity.model.ChatModel
 import com.sibyl.mirainikki.activity.chatActivity.repo.ChatRepo
+import com.sibyl.mirainikki.activity.chatActivity.ui.ChatAdapter
 import com.sibyl.mirainikki.base.BaseActivity
 import com.sibyl.mirainikki.databinding.ChatActivityBinding
 
@@ -33,6 +34,7 @@ class ChatActivity : BaseActivity() {
         binding.chatModel = model
         binding.chatRv.apply {
             layoutManager = LinearLayoutManager(this@ChatActivity)
+            adapter = ChatAdapter(this@ChatActivity,model.dataList.value)
         }
     }
 
