@@ -33,9 +33,8 @@ class ChatAdapter(val context: Context, var dataList: MutableList<ChatDataItem>?
         binding?.apply {
             isMe = dataList!![pos].isMe
             time = if (timeCache != dataList!![pos].time) dataList!![pos].time.apply { timeCache = this } else ""
-
+            msg = dataList!![pos].msg
         }
-
 
     }
 }

@@ -19,9 +19,8 @@
             type="Boolean" />
 
         <variable
-            name="chatContent"
+            name="msg"
             type="String" />
-
 
     </data>
 
@@ -33,15 +32,26 @@
         android:paddingRight="8dp">
 
         <!--时间-->
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="15dp"
-            android:textColor="#616161"
-            android:textSize="12sp"
             android:visibility="@{TextUtils.isEmpty(time)? View.GONE: View.VISIBLE}"
-            tools:text="14:29" />
+            android:gravity="center"
+            android:paddingBottom="6dp"
+            android:paddingTop="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/time_corner_rect"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="@{time}"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="14:29" />
+        </LinearLayout>
 
         <!--isMe气泡布局-->
         <LinearLayout
@@ -62,7 +72,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{chatContent}"
+                    android:text="@{msg}"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
                     tools:text="lsjflsdjflksdjlfskdlfjlskjflakslsjflsdjflksdjlfskdlfjlskjflasjdlfkjaslkfdjslakfjlasj" />
             </LinearLayout>
 
@@ -80,7 +92,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:gravity="left"
             android:orientation="horizontal"
             android:visibility="@{isMe?View.GONE: View.VISIBLE}">
@@ -103,7 +114,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{chatContent}"
+                    android:text="@{msg}"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
                     tools:text="lsjflsdjflksdjlfskdlfjlskjflaksjflasjdlfkjaslkfdjslakfjlasj" />
             </LinearLayout>
 
