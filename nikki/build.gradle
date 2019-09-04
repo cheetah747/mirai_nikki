@@ -76,6 +76,9 @@ dependencies {
     //圆形头像库
     implementation 'de.hdodenhof:circleimageview:3.0.1'
 
+    //轻量级气泡弹窗
+    implementation "com.github.skydoves:balloon:1.0.5"
+
 }
 repositories {
     mavenCentral()

@@ -47,4 +47,20 @@ class ChatAdapter(val context: Context, var dataList: MutableList<ChatDataItem>?
                 .hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+//    val balloon = createBalloon(context) {
+//        setArrowSize(10)
+//        setWidthRatio(1.0f)
+//        setHeight(65)
+//        setArrowPosition(0.7f)
+//        setCornerRadius(4f)
+//        setAlpha(0.9f)
+//        setText("You can access your profile from on now.")
+//        setTextColorResource(R.color.white)
+////        setIconDrawable(ContextCompat.getDrawable(baseContext, R.drawable.ic_profile))
+//        setBackgroundColorResource(R.color.colorAccent)
+//        setOnBalloonClickListener{}
+//        setBalloonAnimation(BalloonAnimation.FADE)
+//        setLifecycleOwner(context as Activity)
+//    }
+
 }
