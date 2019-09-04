@@ -2,7 +2,9 @@ package com.sibyl.mirainikki.activity.chatActivity.ui
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sibyl.mirainikki.R
@@ -34,7 +36,15 @@ class ChatAdapter(val context: Context, var dataList: MutableList<ChatDataItem>?
             isMe = dataList!![pos].isMe
             time = if (timeCache != dataList!![pos].time) dataList!![pos].time.apply { timeCache = this } else ""
             msg = dataList!![pos].msg
+            containerLayout.setOnClickListener { hideKeyboard(context,holder.view)  }
         }
 
     }
+
+    //收起软键盘
+    fun hideKeyboard(context: Context,view: View) {
+        (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+                .hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
 }

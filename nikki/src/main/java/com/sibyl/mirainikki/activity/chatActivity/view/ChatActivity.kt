@@ -52,7 +52,7 @@ class ChatActivity : BaseActivity() {
 
         //刷新列表
         model.isFreshRv.observe(this, Observer {
-            if (it){
+            if (it) {
                 val endPos = model.dataList.value!!.size - 1
                 binding.chatRv.adapter?.notifyItemChanged(endPos)
                 Handler().postDelayed({
@@ -60,9 +60,16 @@ class ChatActivity : BaseActivity() {
                 }, 200)
             }
         })
+        //使同时支持多行输入+响应键盘回车发送键
+        binding.inputEditText.apply {
+            setInputType(TYPE_TEXT_FLAG_MULTI_LINE)
+            setSingleLine(false)
+            setOnClickListener {//点击后会弹出键盘，然后挪到底部，避免被键盘遮挡
+                Handler().postDelayed({ binding.chatRv.smoothScrollToPosition(model.dataList.value!!.size - 1) },200)
+            }
+        }
 
-        binding.inputEditText.setInputType(TYPE_TEXT_FLAG_MULTI_LINE)
-        binding.inputEditText.setSingleLine(false)
+
     }
 
     fun start() {
