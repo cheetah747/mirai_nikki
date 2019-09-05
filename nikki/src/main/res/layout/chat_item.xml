@@ -48,6 +48,8 @@
                 android:gravity="center"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
                 android:text="@{time}"
                 android:textColor="@color/white"
                 android:textSize="12sp"
@@ -60,7 +62,7 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:orientation="horizontal"
-            android:visibility="@{isMe?View.VISIBLE: View.GONE}">
+            android:visibility="@{(isMe &amp;&amp; !TextUtils.isEmpty(msg))?View.VISIBLE: View.GONE}">
 
             <!--聊天气泡容器-->
             <LinearLayout
@@ -96,7 +98,7 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:orientation="horizontal"
-            android:visibility="@{isMe?View.GONE: View.VISIBLE}">
+            android:visibility="@{(!isMe &amp;&amp; !TextUtils.isEmpty(msg))?View.VISIBLE: View.GONE}">
             <!--头像-->
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="45dp"

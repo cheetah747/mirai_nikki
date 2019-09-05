@@ -19,8 +19,11 @@ class ChatDataItem {
 //            }
 //        }
 
-    var isMe = false//是我自己吗？
-
+    var isMe = true//是我自己吗？
+    var isOrder = false//是否是指令
     /**可点击的指令*/
     var orders = listOf<String>()
+
+    /**在最终保存时，判断是否需要保存这一段*/
+    fun isMsg4Save() = isMe && !isOrder && msg.isNotBlank()
 }

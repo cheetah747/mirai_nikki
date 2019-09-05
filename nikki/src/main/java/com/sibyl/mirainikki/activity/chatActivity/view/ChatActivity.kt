@@ -61,6 +61,11 @@ class ChatActivity : BaseActivity() {
                 }, 200)
             }
         })
+        //刷新具体位置的元素
+        model.refreshRvPos.observe(this, Observer {
+            binding.chatRv.adapter?.notifyItemChanged(it)
+        })
+
         //使同时支持多行输入+响应键盘回车发送键
         binding.inputEditText.apply {
             setInputType(TYPE_TEXT_FLAG_MULTI_LINE)

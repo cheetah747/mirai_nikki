@@ -48,7 +48,7 @@ class ChatAdapter(val context: Context, val chatModel: ChatModel) : RecyclerView
             //长按撤回消息
             chatMeLayout.setOnLongClickListener {
                 chatModel.longClickedPos = pos
-                chatModel.sendMsg("“${msg}” ${R.string.delete_msg}", false)
+                chatModel.sendMsg("“${msg}” ${context.resources.getString(R.string.delete_msg)}", false)
                 true
             }
         }

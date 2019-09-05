@@ -24,6 +24,9 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
     //刷新列表（其实只用刷新最后一项就行了）
     var isFreshRv: MutableLiveData<Boolean> = MutableLiveData()
 
+    //需要刷新的具体位置
+    var refreshRvPos: MutableLiveData<Int> = MutableLiveData()
+
     //当前输入
     var inputText: ObservableField<String> = ObservableField("")
 
@@ -40,9 +43,8 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
         })
         isFreshRv.value = true
         inputText.set("")
-
-        //检查用户输入
-        Handler().postDelayed({ checkOrder(msg) }, 1_000)
+        //判断并执行指令
+        checkOrder(msg.trim())
     }
 
 
@@ -52,19 +54,33 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
     }
 
     /**ユーザーが入力したオーダーに応じる*/
-    private fun checkOrder(orderInput: String) {
-        //最后一条是我自己，那就不检查指令
-        if (dataList.value?.last()?.isMe ?:true) return
+    private fun checkOrder(orderInput: String) {//返回该条输入是否是指令
+        //发出的消息不是我自己，那就不是指令
+        if (!(dataList.value?.last()?.isMe ?: false)) return
 
-        when (dataList.value?.last()?.msg) {
-            //撤回消息
-            app.resources.getString(R.string.delete_msg) -> {
-                dataList.value?.get(longClickedPos)?.msg = ""
-                dataList.value?.get(longClickedPos)?.time = app.resources.getString(R.string.msg_is_deleted)
-                longClickedPos = -1
-                isFreshRv.value = true//手动刷新列表
+        try {
+            dataList.value?.get(dataList.value!!.size - 2)?.msg?.run {
+                //撤回消息
+                if (orderInput != "y" && endsWith(app.resources.getString(R.string.delete_msg))) {
+                    dataList.value?.get(longClickedPos)?.msg = ""
+                    dataList.value?.get(longClickedPos)?.time = app.resources.getString(R.string.msg_is_deleted)
+                    refreshRvPos.value = longClickedPos
+                    longClickedPos = -1
+                    //撤回完成，再发个消息来提示
+                    Handler().postDelayed({
+                        //                    sendMsg(app.resources.getString(R.string.msg_is_deleted_success), false)
+                    }, 1_000)
+                    return
+                }
+
+//            if (endsWith()){
+//
+//            }
             }
+        } catch (e: IndexOutOfBoundsException) {
+            e.printStackTrace()
         }
+
     }
 
 

@@ -8,7 +8,9 @@
     <string name="textcache_shortcut_clear">クリア</string>
     <string name="download">ダウンロード</string>
     <string name="delete_msg">を取り消しますか？</string>
-    <string name="msg_is_deleted">このメッセージを取り消しました</string>
+    <string name="msg_is_deleted">メッセージを取り消し</string>
+    <string name="msg_is_deleted_success">取り消し完成です</string>
+
 
 
 
