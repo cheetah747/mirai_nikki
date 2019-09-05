@@ -9,7 +9,7 @@ class ChatDataItem {
     var time: String = ""
 //        //聊天时间
 //        get() {
-//            val now = SimpleDateFormat("HH:mm").format(Date())
+//            val now = SimpleDateFormat("HH時mm分").format(Date())
 //            //只有在和上次时间不一样时，才显示时间，否则隐藏
 //            if (now != field) {
 //                field = now
@@ -20,4 +20,7 @@ class ChatDataItem {
 //        }
 
     var isMe = false//是我自己吗？
+
+    /**可点击的指令*/
+    var orders = listOf<String>()
 }

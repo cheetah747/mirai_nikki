@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.sibyl.mirainikki.MyToast.MyToast
 import com.sibyl.mirainikki.R
 import com.sibyl.mirainikki.activity.chatActivity.model.ChatModel
 import com.sibyl.mirainikki.databinding.ChatItemBinding
@@ -18,7 +17,7 @@ import com.sibyl.mirainikki.databinding.ChatItemBinding
 class ChatAdapter(val context: Context, val chatModel: ChatModel) : RecyclerView.Adapter<ViewHolderX>() {
     var timeCache: String = ""//当前时间
     var dataList: MutableList<ChatDataItem>? = mutableListOf()
-    var longClickedPos = -1//记录长按位置
+
 
     init {
         dataList = chatModel.dataList.value
@@ -44,11 +43,12 @@ class ChatAdapter(val context: Context, val chatModel: ChatModel) : RecyclerView
             isMe = dataList!![pos].isMe
             time = if (timeCache != dataList!![pos].time) dataList!![pos].time.apply { timeCache = this } else ""
             msg = dataList!![pos].msg
-            containerLayout.setOnClickListener { hideKeyboard(context,holder.view)  }
+            containerLayout.setOnClickListener { hideKeyboard(context, holder.view) }
 
+            //长按撤回消息
             chatMeLayout.setOnLongClickListener {
-                longClickedPos = pos
-                MyToast.show("chatMeLayout.setOnLongClickListener $pos")
+                chatModel.longClickedPos = pos
+                chatModel.sendMsg("“${msg}” ${R.string.delete_msg}", false)
                 true
             }
         }
@@ -56,7 +56,7 @@ class ChatAdapter(val context: Context, val chatModel: ChatModel) : RecyclerView
     }
 
     //收起软键盘
-    fun hideKeyboard(context: Context,view: View) {
+    fun hideKeyboard(context: Context, view: View) {
         (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
                 .hideSoftInputFromWindow(view.getWindowToken(), 0);
     }

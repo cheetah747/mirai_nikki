@@ -7,6 +7,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.sibyl.mirainikki.MyApplication.MyApplication
 import com.sibyl.mirainikki.R
 import com.sibyl.mirainikki.activity.chatActivity.model.ChatFactory
 import com.sibyl.mirainikki.activity.chatActivity.model.ChatModel
@@ -23,7 +24,7 @@ import com.sibyl.mirainikki.databinding.ChatActivityBinding
 class ChatActivity : BaseActivity() {
     val binding by lazy { DataBindingUtil.setContentView<ChatActivityBinding>(this, R.layout.chat_activity) }
 
-    val model by lazy { ViewModelProviders.of(this, ChatFactory(ChatRepo())).get(ChatModel::class.java) }
+    val model by lazy { ViewModelProviders.of(this, ChatFactory(ChatRepo(), MyApplication.app)).get(ChatModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
