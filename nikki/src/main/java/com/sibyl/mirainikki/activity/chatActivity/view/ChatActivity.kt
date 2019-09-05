@@ -46,7 +46,7 @@ class ChatActivity : BaseActivity() {
         }
         binding.chatRv.apply {
             layoutManager = CustomLinearLayoutManager(this@ChatActivity)/*.apply { stackFromEnd = true }*///设置stackFromEnd表示从底部开始展示数据，这样在弹出键盘时不会挡住
-            adapter = ChatAdapter(this@ChatActivity, model.dataList.value)
+            adapter = ChatAdapter(this@ChatActivity, model)
 
         }
 
@@ -65,7 +65,7 @@ class ChatActivity : BaseActivity() {
             setInputType(TYPE_TEXT_FLAG_MULTI_LINE)
             setSingleLine(false)
             setOnClickListener {//点击后会弹出键盘，然后挪到底部，避免被键盘遮挡
-                Handler().postDelayed({ binding.chatRv.smoothScrollToPosition(model.dataList.value!!.size - 1) },200)
+                Handler().postDelayed({ binding.chatRv.scrollToPosition(model.dataList.value!!.size - 1) },200)
             }
         }
 

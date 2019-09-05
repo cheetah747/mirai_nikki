@@ -7,14 +7,22 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.sibyl.mirainikki.MyToast.MyToast
 import com.sibyl.mirainikki.R
+import com.sibyl.mirainikki.activity.chatActivity.model.ChatModel
 import com.sibyl.mirainikki.databinding.ChatItemBinding
 
 /**
  * @author Sasuke on 2019-9-2 0002.
  */
-class ChatAdapter(val context: Context, var dataList: MutableList<ChatDataItem>?) : RecyclerView.Adapter<ViewHolderX>() {
+class ChatAdapter(val context: Context, val chatModel: ChatModel) : RecyclerView.Adapter<ViewHolderX>() {
     var timeCache: String = ""//当前时间
+    var dataList: MutableList<ChatDataItem>? = mutableListOf()
+    var longClickedPos = -1//记录长按位置
+
+    init {
+        dataList = chatModel.dataList.value
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderX {
         val binding = DataBindingUtil.inflate<ChatItemBinding>(
@@ -37,6 +45,12 @@ class ChatAdapter(val context: Context, var dataList: MutableList<ChatDataItem>?
             time = if (timeCache != dataList!![pos].time) dataList!![pos].time.apply { timeCache = this } else ""
             msg = dataList!![pos].msg
             containerLayout.setOnClickListener { hideKeyboard(context,holder.view)  }
+
+            chatMeLayout.setOnLongClickListener {
+                longClickedPos = pos
+                MyToast.show("chatMeLayout.setOnLongClickListener $pos")
+                true
+            }
         }
 
     }
