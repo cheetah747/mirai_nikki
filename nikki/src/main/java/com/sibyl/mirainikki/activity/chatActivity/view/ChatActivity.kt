@@ -14,6 +14,7 @@ import com.sibyl.mirainikki.activity.chatActivity.model.ChatModel
 import com.sibyl.mirainikki.activity.chatActivity.repo.ChatRepo
 import com.sibyl.mirainikki.activity.chatActivity.ui.ChatAdapter
 import com.sibyl.mirainikki.activity.chatActivity.ui.CustomLinearLayoutManager
+import com.sibyl.mirainikki.activity.chatActivity.util.fingerCheck
 import com.sibyl.mirainikki.base.BaseActivity
 import com.sibyl.mirainikki.databinding.ChatActivityBinding
 
@@ -25,6 +26,8 @@ class ChatActivity : BaseActivity() {
     val binding by lazy { DataBindingUtil.setContentView<ChatActivityBinding>(this, R.layout.chat_activity) }
 
     val model by lazy { ViewModelProviders.of(this, ChatFactory(ChatRepo(), MyApplication.app)).get(ChatModel::class.java) }
+
+//    private lateinit var cancelSignal: CancellationSignal
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,10 +73,53 @@ class ChatActivity : BaseActivity() {
         binding.inputEditText.apply {
             setInputType(TYPE_TEXT_FLAG_MULTI_LINE)
             setSingleLine(false)
-            setOnClickListener {//点击后会弹出键盘，然后挪到底部，避免被键盘遮挡
-                Handler().postDelayed({ binding.chatRv.scrollToPosition(model.dataList.value!!.size - 1) },200)
+            setOnClickListener {
+                //点击后会弹出键盘，然后挪到底部，避免被键盘遮挡
+                Handler().postDelayed({ binding.chatRv.scrollToPosition(model.dataList.value!!.size - 1) }, 200)
             }
         }
+
+        /**校验指纹*/
+        model.isCheckFinger.observe(this, Observer {
+            if (it) {
+                fingerCheck(this,
+                        { model.sendMsg("認証キャンセル", false) },
+                        { model.sendMsg("非対応です", false) },
+                        { model.sendMsg("その他のエラーです", false) },
+                        { model.sendMsg("認証成功です", false) },
+                        { model.sendMsg("認証失敗です", false) }
+                )
+//                cancelSignal = CancellationSignal()
+//                val builder = BiometricPrompt.Builder(this)
+//                builder.setTitle("生体認証します")
+//                builder.setNegativeButton("キャンセル", mainExecutor, DialogInterface.OnClickListener { dialogInterface, i ->
+//                    model.sendMsg("認証キャンセル",false)
+//                    cancelSignal.cancel()
+//                })
+//                builder.build().authenticate(cancelSignal, mainExecutor, object : BiometricPrompt.AuthenticationCallback() {
+//                    override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+//                        when (errorCode) {
+//                            BiometricPrompt.BIOMETRIC_ERROR_NO_BIOMETRICS ->
+//                                model.sendMsg("非対応です",false)
+//                            else ->
+//                                model.sendMsg("その他のエラーです",false)
+//                        }
+//                    }
+//
+//                    override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence) {
+//                        throw RuntimeException("Stub!")
+//                    }
+//
+//                    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+//                        model.sendMsg("認証成功です",false)
+//                    }
+//
+//                    override fun onAuthenticationFailed() {
+//                        model.sendMsg("認証失敗です",false)
+//                    }
+//                })
+            }
+        })
 
 
     }

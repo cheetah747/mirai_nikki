@@ -24,6 +24,9 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
     //刷新列表（其实只用刷新最后一项就行了）
     var isFreshRv: MutableLiveData<Boolean> = MutableLiveData()
 
+    //校验指纹，跳转历史
+    var isCheckFinger: MutableLiveData<Boolean> = MutableLiveData()
+
     //需要刷新的具体位置
     var refreshRvPos: MutableLiveData<Int> = MutableLiveData()
 
@@ -55,33 +58,43 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
 
     /**ユーザーが入力したオーダーに応じる*/
     private fun checkOrder(orderInput: String) {//返回该条输入是否是指令
-        //发出的消息不是我自己，那就不是指令
+        //只检查我自己的消息，其它消息跳过
         if (!(dataList.value?.last()?.isMe ?: false)) return
 
+        //查看历史 (未来)========================
+        if(app.resources.getString(R.string.mirai) == dataList.value?.last()?.msg ?:""){
+            dataList.value?.last()?.isOrder = true
+            Handler().postDelayed({
+                isCheckFinger.value = true
+            },500)
+            return
+        }
         try {
             dataList.value?.get(dataList.value!!.size - 2)?.msg?.run {
-                //撤回消息
-                if (orderInput != "y" && endsWith(app.resources.getString(R.string.delete_msg))) {
-                    dataList.value?.get(longClickedPos)?.msg = ""
-                    dataList.value?.get(longClickedPos)?.time = app.resources.getString(R.string.msg_is_deleted)
-                    refreshRvPos.value = longClickedPos
-                    longClickedPos = -1
-                    //撤回完成，再发个消息来提示
-                    Handler().postDelayed({
-                        //                    sendMsg(app.resources.getString(R.string.msg_is_deleted_success), false)
-                    }, 1_000)
+                //撤回消息=====================
+                if (endsWith(app.resources.getString(R.string.delete_msg))) {
+                    dataList?.value?.last()?.isOrder = true//指令标记
+                    if (orderInput == "y") {//确定
+                        dataList.value?.get(longClickedPos)?.msg = ""
+                        dataList.value?.get(longClickedPos)?.time = app.resources.getString(R.string.msg_is_deleted)
+                        refreshRvPos.value = longClickedPos
+                        longClickedPos = -1
+                        //撤回完成，再发个消息来提示
+                        Handler().postDelayed({
+                            sendMsg(app.resources.getString(R.string.msg_is_deleted_success), false)
+                        }, 1_000)
+                    }
                     return
                 }
 
-//            if (endsWith()){
-//
-//            }
             }
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()
         }
 
     }
+
+
 
 
 }
