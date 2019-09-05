@@ -82,7 +82,7 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
                         //撤回完成，再发个消息来提示
                         Handler().postDelayed({
                             sendMsg(app.resources.getString(R.string.msg_is_deleted_success), false)
-                        }, 1_000)
+                        }, 500)
                     }
                     return
                 }
