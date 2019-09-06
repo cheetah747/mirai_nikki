@@ -3,12 +3,17 @@ package com.sibyl.mirainikki.activity.chatActivity.view
 import android.os.Bundle
 import android.os.Handler
 import android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE
+import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sibyl.mirainikki.MyApplication.MyApplication
 import com.sibyl.mirainikki.R
+import com.sibyl.mirainikki.activity.MainActivity.ui.YearListAdapter
 import com.sibyl.mirainikki.activity.chatActivity.model.ChatFactory
 import com.sibyl.mirainikki.activity.chatActivity.model.ChatModel
 import com.sibyl.mirainikki.activity.chatActivity.repo.ChatRepo
@@ -29,6 +34,18 @@ class ChatActivity : BaseActivity() {
 
     val model by lazy { ViewModelProviders.of(this, ChatFactory(ChatRepo(), MyApplication.app)).get(ChatModel::class.java) }
 
+    /**展示所有nikki的View*/
+    val filesView by lazy {
+        LayoutInflater.from(this).inflate(R.layout.year_list_layout, null).apply {
+            findViewById<RecyclerView>(R.id.yearListRv).run {
+                layoutManager = GridLayoutManager(this@ChatActivity,3)
+                setAdapter(YearListAdapter(this@ChatActivity, model.nikkiFilesList) { file ->
+                    openNikkiFile(this@ChatActivity,file)//点击跳转
+                    null
+                })
+            }
+        }
+    }
 //    private lateinit var cancelSignal: CancellationSignal
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,46 +101,23 @@ class ChatActivity : BaseActivity() {
         /**校验指纹*/
         model.isCheckFinger.observe(this, Observer {
             if (it) {
+                model.sendMsg("まず生体認証をしてください",false,ImageView(this).apply {
+                    setImageResource(R.drawable.finger_print_logo)
+                    minimumWidth = 0
+                    minimumHeight = 0
+                })
                 fingerCheck(this,
                         { model.sendMsg("認証キャンセル", false) },
                         { model.sendMsg("非対応です", false) },
                         { model.sendMsg("その他のエラーです", false) },
                         {
-                            model.sendMsg("認証成功です、今から未来をご覧ください", false)
+                            model.sendMsg("認証成功です、すぐ未来一覧を表示します", false)
                             Handler().postDelayed({
                                 showNikkiList()
                             }, 1_000)
                         },
                         { model.sendMsg("認証失敗です", false) }
                 )
-//                cancelSignal = CancellationSignal()
-//                val builder = BiometricPrompt.Builder(this)
-//                builder.setTitle("生体認証します")
-//                builder.setNegativeButton("キャンセル", mainExecutor, DialogInterface.OnClickListener { dialogInterface, i ->
-//                    model.sendMsg("認証キャンセル",false)
-//                    cancelSignal.cancel()
-//                })
-//                builder.build().authenticate(cancelSignal, mainExecutor, object : BiometricPrompt.AuthenticationCallback() {
-//                    override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-//                        when (errorCode) {
-//                            BiometricPrompt.BIOMETRIC_ERROR_NO_BIOMETRICS ->
-//                                model.sendMsg("非対応です",false)
-//                            else ->
-//                                model.sendMsg("その他のエラーです",false)
-//                        }
-//                    }
-//
-//                    override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence) {
-//                        throw RuntimeException("Stub!")
-//                    }
-//
-//                    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-//                        model.sendMsg("認証成功です",false)
-//                    }
-//
-//                    override fun onAuthenticationFailed() /                        model.sendMsg("認証失敗です",false)
-//                    }
-//                })
             }
         })
 
@@ -133,25 +127,24 @@ class ChatActivity : BaseActivity() {
 
     /**にっきリストを表示*/
     fun showNikkiList() {
-        val fileList = model.listNikkiFiles()
         //如果没有日记
-        if (fileList.size == 0) {
-            model.sendMsg("あれ？空っぽですよ", false)
+        if (model.nikkiFilesList.size == 0) {
+            model.sendMsg(resources.getString(R.string.empty_alert), false)
         }
         //如果有一条日记
-        if (fileList.size == 1) {
+        if (model.nikkiFilesList.size == 1) {
             openNikkiFile(this,FileData.nikkiFile)//如果只有一个文件，那就直接打开就完事了
         }
         //如果大于一条，那就显示列表，供选择哪一年
-        if (fileList.size > 1) {
-//            showYearListDialog(fileList);
+        if (model.nikkiFilesList.size > 1) {
+            model.sendMsg(resources.getString(R.string.here_is_all_the_mirai),false, filesView)
         }
     }
 
 
     fun start() {
         Handler().postDelayed({
-            model.sendMsg("未来日記へようこそ！", false)
+            model.sendMsg(resources.getString(R.string.welcome_to_miraimikki), false)
         }, 500)
     }
 

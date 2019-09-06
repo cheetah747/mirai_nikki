@@ -123,6 +123,7 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     tools:text="lsjflsdjflksdjlfskdlfjlskjflaksjflasjdlfkjaslkfdjslakfjlasj" />
+
             </LinearLayout>
 
         </LinearLayout>

@@ -14,9 +14,7 @@ class ChatRepo {
 //    }
 
     /**获取nikki文件名列表*/
-    fun getNikkiList(): Array<File> {
-        return FileData.rootFile.listFiles { file, fileName -> fileName.endsWith(".mirai") }.apply { sortByDescending { it.name } }
-    }
+    fun getNikkiList(): Array<File> =FileData.rootFile.listFiles { file, fileName -> fileName.endsWith(".mirai") }.apply { sortByDescending { it.name } }
 
 
 

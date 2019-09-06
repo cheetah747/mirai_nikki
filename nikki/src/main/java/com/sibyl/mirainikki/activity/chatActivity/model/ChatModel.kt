@@ -9,7 +9,6 @@ import com.sibyl.mirainikki.MyApplication.MyApplication
 import com.sibyl.mirainikki.R
 import com.sibyl.mirainikki.activity.chatActivity.repo.ChatRepo
 import com.sibyl.mirainikki.activity.chatActivity.ui.ChatDataItem
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -20,6 +19,13 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
     //聊天内容数据
     var dataList = MutableLiveData<MutableList<ChatDataItem>>().apply {
         value = mutableListOf()
+    }
+
+    /**列出文件名
+     * //显示年份列表，用户可以选择查看哪一年的记录。
+     * */
+    val nikkiFilesList by lazy {
+        repo.getNikkiList()
     }
 
     //刷新列表（其实只用刷新最后一项就行了）
@@ -37,13 +43,13 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
     var longClickedPos = -1//记录长按位置
 
     /**発信*/
-    fun sendMsg(msg: String, isMe: Boolean = true, orders: List<String> = listOf()) {
+    fun sendMsg(msg: String, isMe: Boolean = true,view: View? = null) {
         if (msg.isBlank()) return
         dataList.value?.add(ChatDataItem().apply {
             this.time = SimpleDateFormat("HH時mm分").format(Date())
             this.msg = msg.trim()
             this.isMe = isMe
-            this.orders = orders
+            this.view = view
         })
         isFreshRv.value = true
         inputText.set("")
@@ -53,9 +59,7 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
 
 
     /**発信ボタンクリックリスナー*/
-    fun onSendClick(view: View) {
-        sendMsg(inputText.get()!!)
-    }
+    fun onSendClick(view: View) = sendMsg(inputText.get()!!)
 
     /**ユーザーが入力したオーダーに応じる*/
     private fun checkOrder(orderInput: String) {//返回该条输入是否是指令
@@ -92,16 +96,6 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
         } catch (e: IndexOutOfBoundsException) {
             e.printStackTrace()
         }
-
-    }
-
-    /**列出文件名*/
-    fun listNikkiFiles(): List<File> {
-        //显示年份列表，用户可以选择查看哪一年的记录。
-        return repo.getNikkiList().toList()
-    }
-
-    fun openNikkiFile() {
 
     }
 
