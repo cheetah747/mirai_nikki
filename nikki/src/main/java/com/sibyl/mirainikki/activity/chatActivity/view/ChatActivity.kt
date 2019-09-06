@@ -1,9 +1,11 @@
 package com.sibyl.mirainikki.activity.chatActivity.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE
 import android.view.inputmethod.EditorInfo
+import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,6 +19,8 @@ import com.sibyl.mirainikki.activity.chatActivity.ui.CustomLinearLayoutManager
 import com.sibyl.mirainikki.activity.chatActivity.util.fingerCheck
 import com.sibyl.mirainikki.base.BaseActivity
 import com.sibyl.mirainikki.databinding.ChatActivityBinding
+import com.sibyl.mirainikki.reposity.FileData
+import java.io.File
 
 /**
  * @author Sasuke on 2019-8-30 0030.
@@ -86,7 +90,12 @@ class ChatActivity : BaseActivity() {
                         { model.sendMsg("認証キャンセル", false) },
                         { model.sendMsg("非対応です", false) },
                         { model.sendMsg("その他のエラーです", false) },
-                        { model.sendMsg("認証成功です", false) },
+                        {
+                            model.sendMsg("認証成功です、今から未来をご覧ください", false)
+                            Handler().postDelayed({
+                                showNikkiList()
+                            }, 1_000)
+                        },
                         { model.sendMsg("認証失敗です", false) }
                 )
 //                cancelSignal = CancellationSignal()
@@ -114,8 +123,7 @@ class ChatActivity : BaseActivity() {
 //                        model.sendMsg("認証成功です",false)
 //                    }
 //
-//                    override fun onAuthenticationFailed() {
-//                        model.sendMsg("認証失敗です",false)
+//                    override fun onAuthenticationFailed() /                        model.sendMsg("認証失敗です",false)
 //                    }
 //                })
             }
@@ -123,6 +131,36 @@ class ChatActivity : BaseActivity() {
 
 
     }
+
+
+    /**にっきリストを表示*/
+    fun showNikkiList() {
+        val fileList = model.listNikkiFiles()
+        //如果没有日记
+        if (fileList.size == 0) {
+            model.sendMsg("あれ？空っぽですよ", false)
+        }
+        //如果有一条日记
+        if (fileList.size == 1) {
+            openNikkiFile(FileData.nikkiFile)//如果只有一个文件，那就直接打开就完事了
+        }
+        //如果大于一条，那就显示列表，供选择哪一年
+        if (fileList.size > 1) {
+//            showYearListDialog(fileList);
+        }
+    }
+
+    /**直接打开文件*/
+    fun openNikkiFile(file: File) {
+        startActivity(Intent("android.intent.action.VIEW").apply {
+            addCategory(Intent.CATEGORY_DEFAULT)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            //        Uri uri = Uri.fromFile(FileData.getNikkiFile());
+            setDataAndType(FileProvider.getUriForFile(MyApplication.app, FileData.fileProviderAuth, file), "text/plain")
+        })
+    }
+
 
     fun start() {
         Handler().postDelayed({

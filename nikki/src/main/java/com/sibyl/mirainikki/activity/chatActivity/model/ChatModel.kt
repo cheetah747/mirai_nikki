@@ -1,5 +1,8 @@
 package com.sibyl.mirainikki.activity.chatActivity.model
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Handler
 import android.view.View
 import androidx.databinding.ObservableField
@@ -9,6 +12,7 @@ import com.sibyl.mirainikki.MyApplication.MyApplication
 import com.sibyl.mirainikki.R
 import com.sibyl.mirainikki.activity.chatActivity.repo.ChatRepo
 import com.sibyl.mirainikki.activity.chatActivity.ui.ChatDataItem
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -62,11 +66,11 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
         if (!(dataList.value?.last()?.isMe ?: false)) return
 
         //查看历史 (未来)========================
-        if(app.resources.getString(R.string.mirai) == dataList.value?.last()?.msg ?:""){
+        if (app.resources.getString(R.string.mirai) == dataList.value?.last()?.msg ?: "") {
             dataList.value?.last()?.isOrder = true
             Handler().postDelayed({
                 isCheckFinger.value = true
-            },500)
+            }, 500)
             return
         }
         try {
@@ -75,6 +79,7 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
                 if (endsWith(app.resources.getString(R.string.delete_msg))) {
                     dataList?.value?.last()?.isOrder = true//指令标记
                     if (orderInput == "y") {//确定
+                        copy2Clipboard(dataList.value?.get(longClickedPos)?.msg)//清除前先拷贝一份
                         dataList.value?.get(longClickedPos)?.msg = ""
                         dataList.value?.get(longClickedPos)?.time = app.resources.getString(R.string.msg_is_deleted)
                         refreshRvPos.value = longClickedPos
@@ -94,7 +99,24 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
 
     }
 
+    /**列出文件名*/
+    fun listNikkiFiles(): List<File> {
+        //显示年份列表，用户可以选择查看哪一年的记录。
+        return repo.getNikkiList().toList()
+    }
+
+    fun openNikkiFile() {
+
+    }
 
 
+    /***
+     * 复制到剪切板
+     */
+    fun copy2Clipboard(text: String?) {
+        text?.let {
+            (app.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).primaryClip = ClipData.newPlainText("", text)
+        }
+    }
 
 }

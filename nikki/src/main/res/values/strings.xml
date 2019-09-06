@@ -7,9 +7,9 @@
     <string name="textcache_shortcut_paste">ブックマーク</string>
     <string name="textcache_shortcut_clear">クリア</string>
     <string name="download">ダウンロード</string>
-    <string name="delete_msg">を取り消しますか？</string>
-    <string name="msg_is_deleted">メッセージを取り消し</string>
-    <string name="msg_is_deleted_success">取り消し完成</string>
+    <string name="delete_msg">を撤回しますか？</string>
+    <string name="msg_is_deleted">メッセージ撤回</string>
+    <string name="msg_is_deleted_success">撤回完成</string>
     <string name="mirai">未来</string>
 
 

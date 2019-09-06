@@ -22,13 +22,15 @@ public class FileData {
     public static File rootFile;
     public static String tail = ".mirai";
     public static String fileProviderAuth = "com.sibyl.mirainikki.fileProvider";
+    public static File nomediaFile;
 
     public static void initFilePath(){
         try {
             /*sdFile = new File(Environment.getExternalStorageDirectory().getCanonicalPath().toString()
             +"/Android/data");*/
             sdFile = new File(Environment.getExternalStorageDirectory().getCanonicalPath().toString());
-            rootFile = new File(sdFile.getAbsolutePath() + File.separator + "0カード/しりょう/MIRAINIKKI/");
+            rootFile = new File(sdFile.getAbsolutePath() + File.separator + "0カード/しりょう/ドキュメント/MIRAINIKKI/");
+            nomediaFile = new File(rootFile.getCanonicalPath() + File.separator + ".nomedia");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,6 +39,15 @@ public class FileData {
 //        rootFile = new File(sdFile.toString()+"/Android/data/にっき");
         if(!rootFile.exists()){
             rootFile.mkdirs();
+        }
+
+        //メディアファイルを排除
+        if(!nomediaFile.exists()){
+            try {
+                nomediaFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         //如果日期是空的，因为后面要直接调用，所以一定要校验

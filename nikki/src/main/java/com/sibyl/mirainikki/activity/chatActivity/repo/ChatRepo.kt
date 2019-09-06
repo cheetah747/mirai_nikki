@@ -1,5 +1,8 @@
 package com.sibyl.mirainikki.activity.chatActivity.repo
 
+import com.sibyl.mirainikki.reposity.FileData
+import java.io.File
+
 /**
  * @author Sasuke on 2019-9-2 0002.
  */
@@ -9,5 +12,12 @@ class ChatRepo {
 //    suspend fun sendMsg(msg: String) = suspendCoroutine<Boolean> { conti ->
 //
 //    }
+
+    /**获取nikki文件名列表*/
+    fun getNikkiList(): Array<File> {
+        return FileData.rootFile.listFiles { file, fileName -> fileName.endsWith(".mirai") }.apply { sortByDescending { it.name } }
+    }
+
+
 
 }
