@@ -126,7 +126,6 @@ public class MainActivity extends BaseActivity implements DialogContract.View {
     @TargetApi(23)
     public void checkFinger() {
         switchFingerMode(true);//切换成指纹验证模式
-        //SasukeTodo 以下注释的地方就是以前写的指纹验证，到时候可以在这里找逻辑。指纹验证参考资料：https://qiita.com/devnokiyo/items/1fa9ad291a6211ef1595
 //        mPre.getFingerManager(this).authenticate(null, 0, mPre.getCancelSignal(), new FingerprintManagerCompat.AuthenticationCallback() {
 //            @Override
 //            public void onAuthenticationError(int errMsgId, CharSequence errString) {//指纹全错，停止验证

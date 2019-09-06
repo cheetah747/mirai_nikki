@@ -20,6 +20,10 @@ class ChatDataItem {
 //                return ""
 //            }
 //        }
+    var date = ""
+    var weekOfYear = ""
+    var yearMonth = ""
+    var year = ""
 
     var isMe = true//是我自己吗？
     var isOrder = false//是否是指令

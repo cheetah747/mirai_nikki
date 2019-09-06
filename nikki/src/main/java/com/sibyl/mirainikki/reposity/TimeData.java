@@ -16,7 +16,7 @@ public class TimeData {
     final public static String LAST_YEAR = "LAST_YEAR";
 
     public static Calendar calendar;
-    public static String date;// 2017_03_01_【水】
+    public static String date;// 2017-03-01-【水】
     public static String time;// hour+"時"+minute+"分"
     public static String weekOfYear;//是一年的第几周（用于比较是否是同一周
     public static String yearMonth;// 如yyyy-MM格式的年月份字符串
@@ -129,6 +129,14 @@ public class TimeData {
         PreferHelper.getInstance().setString(LAST_MONTH,getYearMonth());
         PreferHelper.getInstance().setString(LAST_WEEK_OF_YEAR,getWeekOfYear());
         PreferHelper.getInstance().setString(LAST_YEAR,getYear());
+    }
+
+    /**保存所有日期标记到prefs*/
+    public static void saveAllDatePrefs(String date,String yearMonth,String weekOfYear,String year){
+        PreferHelper.getInstance().setString(LAST_DAY,date);
+        PreferHelper.getInstance().setString(LAST_MONTH,yearMonth);
+        PreferHelper.getInstance().setString(LAST_WEEK_OF_YEAR,weekOfYear);
+        PreferHelper.getInstance().setString(LAST_YEAR,year);
     }
 
 }
