@@ -1,11 +1,9 @@
 package com.sibyl.mirainikki.activity.chatActivity.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE
 import android.view.inputmethod.EditorInfo
-import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,10 +15,10 @@ import com.sibyl.mirainikki.activity.chatActivity.repo.ChatRepo
 import com.sibyl.mirainikki.activity.chatActivity.ui.ChatAdapter
 import com.sibyl.mirainikki.activity.chatActivity.ui.CustomLinearLayoutManager
 import com.sibyl.mirainikki.activity.chatActivity.util.fingerCheck
+import com.sibyl.mirainikki.activity.chatActivity.util.openNikkiFile
 import com.sibyl.mirainikki.base.BaseActivity
 import com.sibyl.mirainikki.databinding.ChatActivityBinding
 import com.sibyl.mirainikki.reposity.FileData
-import java.io.File
 
 /**
  * @author Sasuke on 2019-8-30 0030.
@@ -142,23 +140,12 @@ class ChatActivity : BaseActivity() {
         }
         //如果有一条日记
         if (fileList.size == 1) {
-            openNikkiFile(FileData.nikkiFile)//如果只有一个文件，那就直接打开就完事了
+            openNikkiFile(this,FileData.nikkiFile)//如果只有一个文件，那就直接打开就完事了
         }
         //如果大于一条，那就显示列表，供选择哪一年
         if (fileList.size > 1) {
 //            showYearListDialog(fileList);
         }
-    }
-
-    /**直接打开文件*/
-    fun openNikkiFile(file: File) {
-        startActivity(Intent("android.intent.action.VIEW").apply {
-            addCategory(Intent.CATEGORY_DEFAULT)
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            //        Uri uri = Uri.fromFile(FileData.getNikkiFile());
-            setDataAndType(FileProvider.getUriForFile(MyApplication.app, FileData.fileProviderAuth, file), "text/plain")
-        })
     }
 
 
@@ -167,4 +154,6 @@ class ChatActivity : BaseActivity() {
             model.sendMsg("未来日記へようこそ！", false)
         }, 500)
     }
+
+
 }

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sibyl.mirainikki.R
 import com.sibyl.mirainikki.activity.chatActivity.model.ChatModel
+import com.sibyl.mirainikki.activity.chatActivity.util.copy2Clipboard
 import com.sibyl.mirainikki.databinding.ChatItemBinding
 
 /**
@@ -49,6 +50,8 @@ class ChatAdapter(val context: Context, val chatModel: ChatModel) : RecyclerView
             chatMeLayout.setOnLongClickListener {
                 chatModel.longClickedPos = pos
                 chatModel.sendMsg("“${msg}” ${context.resources.getString(R.string.delete_msg)}", false)
+                copy2Clipboard(msg)//清除前先拷贝一份
+
                 true
             }
         }

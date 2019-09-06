@@ -1,8 +1,5 @@
 package com.sibyl.mirainikki.activity.chatActivity.model
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.os.Handler
 import android.view.View
 import androidx.databinding.ObservableField
@@ -78,8 +75,7 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
                 //撤回消息=====================
                 if (endsWith(app.resources.getString(R.string.delete_msg))) {
                     dataList?.value?.last()?.isOrder = true//指令标记
-                    if (orderInput == "y") {//确定
-                        copy2Clipboard(dataList.value?.get(longClickedPos)?.msg)//清除前先拷贝一份
+                    if (orderInput in arrayOf("y","Y","是","はい")) {//确定
                         dataList.value?.get(longClickedPos)?.msg = ""
                         dataList.value?.get(longClickedPos)?.time = app.resources.getString(R.string.msg_is_deleted)
                         refreshRvPos.value = longClickedPos
@@ -107,16 +103,6 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
 
     fun openNikkiFile() {
 
-    }
-
-
-    /***
-     * 复制到剪切板
-     */
-    fun copy2Clipboard(text: String?) {
-        text?.let {
-            (app.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).primaryClip = ClipData.newPlainText("", text)
-        }
     }
 
 }
