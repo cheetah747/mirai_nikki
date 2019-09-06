@@ -3,6 +3,7 @@ package com.sibyl.mirainikki.activity.chatActivity.view
 import android.os.Bundle
 import android.os.Handler
 import android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
@@ -19,6 +20,7 @@ import com.sibyl.mirainikki.activity.chatActivity.model.ChatModel
 import com.sibyl.mirainikki.activity.chatActivity.repo.ChatRepo
 import com.sibyl.mirainikki.activity.chatActivity.ui.ChatAdapter
 import com.sibyl.mirainikki.activity.chatActivity.ui.CustomLinearLayoutManager
+import com.sibyl.mirainikki.activity.chatActivity.util.DoubleClickExitDominator
 import com.sibyl.mirainikki.activity.chatActivity.util.fingerCheck
 import com.sibyl.mirainikki.activity.chatActivity.util.openNikkiFile
 import com.sibyl.mirainikki.base.BaseActivity
@@ -34,13 +36,25 @@ class ChatActivity : BaseActivity() {
 
     val model by lazy { ViewModelProviders.of(this, ChatFactory(ChatRepo(), MyApplication.app)).get(ChatModel::class.java) }
 
+    val doubleClickExitDominator by lazy {
+        DoubleClickExitDominator(this,
+                //点击一次的时候
+                { model.sendMsg("もう一回押すと、セーブして閉じます", false) },
+                //双击的时候
+                {
+                    model.sendMsg("セーブしています", false)
+                    binding.inputEditText.run { setText(""); isFocusable = false;isFocusableInTouchMode = false }
+                    model.saveNikkiAndExit()
+                })
+    }
+
     /**展示所有nikki的View*/
     val filesView by lazy {
         LayoutInflater.from(this).inflate(R.layout.year_list_layout, null).apply {
             findViewById<RecyclerView>(R.id.yearListRv).run {
-                layoutManager = GridLayoutManager(this@ChatActivity,3)
+                layoutManager = GridLayoutManager(this@ChatActivity, 3)
                 setAdapter(YearListAdapter(this@ChatActivity, model.nikkiFilesList) { file ->
-                    openNikkiFile(this@ChatActivity,file)//点击跳转
+                    openNikkiFile(this@ChatActivity, file)//点击跳转
                     null
                 })
             }
@@ -101,7 +115,7 @@ class ChatActivity : BaseActivity() {
         /**校验指纹*/
         model.isCheckFinger.observe(this, Observer {
             if (it) {
-                model.sendMsg("まず生体認証をしてください",false,ImageView(this).apply {
+                model.sendMsg("まず生体認証をしてください", false, ImageView(this).apply {
                     setImageResource(R.drawable.finger_print_logo)
                     minimumWidth = 0
                     minimumHeight = 0
@@ -121,6 +135,12 @@ class ChatActivity : BaseActivity() {
             }
         })
 
+        model.isFinish.observe(this, Observer {
+            if (it) {
+                finish()
+            }
+        })
+
 
     }
 
@@ -133,14 +153,21 @@ class ChatActivity : BaseActivity() {
         }
         //如果有一条日记
         if (model.nikkiFilesList.size == 1) {
-            openNikkiFile(this,FileData.nikkiFile)//如果只有一个文件，那就直接打开就完事了
+            openNikkiFile(this, FileData.nikkiFile)//如果只有一个文件，那就直接打开就完事了
         }
         //如果大于一条，那就显示列表，供选择哪一年
         if (model.nikkiFilesList.size > 1) {
-            model.sendMsg(resources.getString(R.string.here_is_all_the_mirai),false, filesView)
+            model.sendMsg(resources.getString(R.string.here_is_all_the_mirai), false, filesView)
         }
     }
 
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return doubleClickExitDominator.onKeyDown(keyCode, event)
+        }
+        return super.onKeyDown(keyCode, event)
+    }
 
     fun start() {
         Handler().postDelayed({
