@@ -43,7 +43,6 @@ class ChatActivity : BaseActivity() {
                 //双击的时候
                 {
                     model.sendMsg("セーブしています", false)
-                    binding.inputEditText.run { setText(""); isFocusable = false;isFocusableInTouchMode = false }
                     model.saveNikkiAndExit()
                 })
     }
@@ -141,7 +140,10 @@ class ChatActivity : BaseActivity() {
             }
         })
 
-
+        //正在保存文件
+        model.isSavingFile.observe(this, Observer {
+            binding.inputEditText.run { setText(""); isFocusable = !it;isFocusableInTouchMode = !it }
+        })
     }
 
 
@@ -163,7 +165,11 @@ class ChatActivity : BaseActivity() {
 
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        //如果正在保存，那就不执行自定义双击操作，免得存重复了。。。
+        if (model.isSavingFile.value!!){
+            return true
+        }
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
             return doubleClickExitDominator.onKeyDown(keyCode, event)
         }
         return super.onKeyDown(keyCode, event)

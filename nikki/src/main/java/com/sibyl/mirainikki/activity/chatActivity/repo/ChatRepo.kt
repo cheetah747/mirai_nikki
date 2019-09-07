@@ -1,5 +1,6 @@
 package com.sibyl.mirainikki.activity.chatActivity.repo
 
+import android.util.Log
 import com.sibyl.mirainikki.MyApplication.MyApplication.app
 import com.sibyl.mirainikki.activity.MainActivity.helper.PreferHelper
 import com.sibyl.mirainikki.activity.chatActivity.ui.ChatDataItem
@@ -66,13 +67,15 @@ class ChatRepo {
                     writer.write(it.date)
                 }
                 writer.write("\r\n")
-                it.time?.takeIf { it.isNotBlank() }?.let {
+                it.time?.takeIf { it.isNotBlank() && PreferHelper.getInstance().getString(TimeData.LAST_TIME) != it }?.let {
+                    Log.i("SasukeLog","LAST_TIME:${PreferHelper.getInstance().getString(TimeData.LAST_TIME)}  it:${it}")
                     writer.write("\r\n")
                     writer.write(it)
                     writer.write("\r\n")
                 }
                 writer.write(it.msg)
-                textList.last().run { TimeData.saveAllDatePrefs(date, yearMonth, weekOfYear, year) }//写入成功后就保存一下最新日期标记
+//                textList.last().run { TimeData.saveAllDatePrefs(date, yearMonth, weekOfYear, year, time) }//写入成功后就保存一下最新日期标记
+                TimeData.saveAllDatePrefs(it.date, it.yearMonth, it.weekOfYear, it.year, it.time)
                 writer.flush()
             }
         } catch (e: Exception) {

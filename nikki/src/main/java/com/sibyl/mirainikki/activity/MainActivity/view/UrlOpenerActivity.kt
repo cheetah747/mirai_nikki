@@ -37,7 +37,7 @@ class UrlOpenerActivity: BaseActivity(){
         }
 
         if (pathTemp.isNullOrEmpty()) finish()
-        Log.d("SasukeLog", "getPath()获取路径成功")
+//        Log.d("SasukeLog", "getPath()获取路径成功")
         return pathTemp
     }
 
@@ -61,7 +61,7 @@ class UrlOpenerActivity: BaseActivity(){
             val uri = Uri.parse(url)
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
-            Log.d("SasukeLog", "loadByBrowser()成功执行所有工作")
+//            Log.d("SasukeLog", "loadByBrowser()成功执行所有工作")
         }
         finish()
     }
@@ -76,7 +76,7 @@ class UrlOpenerActivity: BaseActivity(){
             input.read(buffer)
             //url = EncodingUtils.getString(buffer, "UTF-8");
             url = String(buffer, Charsets.UTF_8)
-            Log.d("SasukeLog", url)
+//            Log.d("SasukeLog", url)
             input.close()
         } catch (e: FileNotFoundException) {
             Toast.makeText(this, "FileNotFoundException", Toast.LENGTH_SHORT).show()
@@ -87,7 +87,7 @@ class UrlOpenerActivity: BaseActivity(){
         }
 
         url = url?.replaceFirst("\\s", "")?.replace("[InternetShortcut]", "")?.replace("URL=","")?.replace("\r\n","")?.replace("\n","")
-        Log.d("SasukeLog", "readUrlFromFile()成功解析出Url")
+//        Log.d("SasukeLog", "readUrlFromFile()成功解析出Url")
         return url
 
     }

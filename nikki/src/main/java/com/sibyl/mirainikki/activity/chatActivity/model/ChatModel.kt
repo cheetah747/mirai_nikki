@@ -46,6 +46,9 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
     /**关闭页面*/
     var isFinish: MutableLiveData<Boolean> = MutableLiveData()
 
+    /**正在保存*/
+    var isSavingFile = MutableLiveData<Boolean>().apply { value = false }
+
     /**発信*/
     fun sendMsg(msg: String, isMe: Boolean = true, view: View? = null) {
         if (msg.isBlank()) return
@@ -53,7 +56,7 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
             this.time = TimeData.makeTime()//SimpleDateFormat("HH時mm分").format(Date())
             this.year = TimeData.getYear()
             this.date = TimeData.makeDate()
-            this.yearMonth = this.date.substring(0,7)
+            this.yearMonth = this.date.substring(0, 7)
             this.weekOfYear = TimeData.makeWeekOfYear()
             this.msg = msg.trim()
             this.isMe = isMe
@@ -110,18 +113,21 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
 
     /**保存并退出*/
     fun saveNikkiAndExit() = viewModelScope.launch {
+        isSavingFile.value = true
         try {
             val result = repo.saveNikki(dataList.value?.filter { it.isMsg4Save() })
             if (result) {
-                sendMsg("セーブ成功",false)
-                Handler().postDelayed({ isFinish.value = true }, 500)
+                sendMsg("セーブ成功", false)
+                Handler().postDelayed({ isFinish.value = true }, 600)
             } else {
-                sendMsg("セーブ失敗",false)
+                sendMsg("セーブ失敗", false)
             }
         } catch (e: Exception) {
-            sendMsg("Exception:${e.message}",false)
+            sendMsg("Exception:${e.message}", false)
             e.printStackTrace()
         }
+
+        isSavingFile.value = false
     }
 
 }
