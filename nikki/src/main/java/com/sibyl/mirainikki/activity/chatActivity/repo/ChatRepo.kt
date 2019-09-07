@@ -30,7 +30,7 @@ class ChatRepo {
      */
     suspend fun saveNikki(textList: List<ChatDataItem>?) = suspendCoroutine<Boolean> { conti ->
         if (textList.isNullOrEmpty()) {
-            conti.resume(false)
+            conti.resume(true)
             return@suspendCoroutine
         }
 
@@ -72,6 +72,7 @@ class ChatRepo {
                     writer.write("\r\n")
                 }
                 writer.write(it.msg)
+                textList.last().run { TimeData.saveAllDatePrefs(date, yearMonth, weekOfYear, year) }//写入成功后就保存一下最新日期标记
                 writer.flush()
             }
         } catch (e: Exception) {
@@ -81,7 +82,6 @@ class ChatRepo {
             writer.close()
         }
         conti.resume(true)
-        textList.last().run { TimeData.saveAllDatePrefs(date, yearMonth, weekOfYear, year) }//写入成功后就保存一下最新日期标记
     }
 
 }

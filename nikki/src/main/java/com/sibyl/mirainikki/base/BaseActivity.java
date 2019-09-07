@@ -39,6 +39,14 @@ public class BaseActivity extends AppCompatActivity {
                 @Override
                 public void permissionGranted(@NonNull String[] permissions) {
                     //用户授予了权限
+                    MyApplication.getInstance().executor.submit(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    FileData.initFilePath();
+                                }
+                            }
+                    );
                 }
 
                 @Override
