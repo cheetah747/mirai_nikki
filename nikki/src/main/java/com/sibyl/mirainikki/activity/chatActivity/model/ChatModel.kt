@@ -78,7 +78,7 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
         if (!(dataList.value?.last()?.isMe ?: false)) return
 
         //查看历史 (未来)========================
-        if (app.resources.getString(R.string.mirai) == dataList.value?.last()?.msg ?: "") {
+        if (dataList.value?.last()?.msg ?: "" in arrayOf(app.resources.getString(R.string.mirai),"みらい","ミライ")) {
             dataList.value?.last()?.isOrder = true
             Handler().postDelayed({
                 isCheckFinger.value = true
@@ -90,7 +90,7 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
                 //撤回消息=====================
                 if (endsWith(app.resources.getString(R.string.delete_msg))) {
                     dataList?.value?.last()?.isOrder = true//指令标记
-                    if (orderInput in arrayOf("y", "Y", "是", "はい")) {//确定
+                    if (orderInput in arrayOf("y", "Y", "是", "はい","うん","あ")) {//确定
                         dataList.value?.get(longClickedPos)?.msg = ""
                         dataList.value?.get(longClickedPos)?.time = app.resources.getString(R.string.msg_is_deleted)
                         refreshRvPos.value = longClickedPos
@@ -123,7 +123,11 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
                 sendMsg("セーブ失敗", false)
             }
         } catch (e: Exception) {
-            sendMsg("Exception:${e.message}", false)
+            sendMsg("${e.message}", false)
+            //如果并不是保存异常，而只是单纯的没有内容，不需要存，那就直接退出
+            if (e.message == app.resources.getString(R.string.empty_straight_exit)){
+                Handler().postDelayed({ isFinish.value = true }, 600)
+            }
             e.printStackTrace()
         }
 

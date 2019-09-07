@@ -36,6 +36,9 @@ class ChatActivity : BaseActivity() {
 
     val model by lazy { ViewModelProviders.of(this, ChatFactory(ChatRepo(), MyApplication.app)).get(ChatModel::class.java) }
 
+    /**当前界面是否不在最前*/
+    var isPaused = false
+
     val doubleClickExitDominator by lazy {
         DoubleClickExitDominator(this,
                 //点击一次的时候
@@ -163,8 +166,19 @@ class ChatActivity : BaseActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        isPaused = false
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isPaused = true
+    }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        //你都没显示在最前，那就不需要执行后面的了
+        if (isPaused) return true
         //如果正在保存，那就不执行自定义双击操作，免得存重复了。。。
         if (model.isSavingFile.value!!){
             return true

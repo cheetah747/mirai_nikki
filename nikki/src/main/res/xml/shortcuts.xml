@@ -13,19 +13,19 @@
             <!--android:targetPackage="com.sibyl.mirainikki" />-->
         <!--&lt;!&ndash;<categories android:name="android.shortcut.conversation" />&ndash;&gt;-->
     <!--</shortcut>-->
-    <shortcut
-        android:enabled="true"
-        android:icon="@mipmap/ic_launcher_circle"
-        android:shortcutDisabledMessage="@string/compose_disabled_message1"
-        android:shortcutId="compose"
-        android:shortcutLongLabel="@string/compose_shortcut_long_label1"
-        android:shortcutShortLabel="@string/compose_shortcut_short_label1">
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:targetClass="com.sibyl.mirainikki.activity.MainActivity.view.ShortcutMainAct"
-            android:targetPackage="com.sibyl.mirainikki" />
-        <!--<categories android:name="android.shortcut.conversation" />-->
-    </shortcut>
+    <!--<shortcut-->
+        <!--android:enabled="true"-->
+        <!--android:icon="@mipmap/ic_launcher_circle"-->
+        <!--android:shortcutDisabledMessage="@string/compose_disabled_message1"-->
+        <!--android:shortcutId="compose"-->
+        <!--android:shortcutLongLabel="@string/compose_shortcut_long_label1"-->
+        <!--android:shortcutShortLabel="@string/compose_shortcut_short_label1">-->
+        <!--<intent-->
+            <!--android:action="android.intent.action.VIEW"-->
+            <!--android:targetClass="com.sibyl.mirainikki.activity.MainActivity.view.ShortcutMainAct"-->
+            <!--android:targetPackage="com.sibyl.mirainikki" />-->
+        <!--&lt;!&ndash;<categories android:name="android.shortcut.conversation" />&ndash;&gt;-->
+    <!--</shortcut>-->
 
     <shortcut
         android:enabled="true"

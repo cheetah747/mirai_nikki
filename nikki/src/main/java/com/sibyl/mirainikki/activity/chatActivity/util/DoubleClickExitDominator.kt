@@ -39,7 +39,7 @@ class DoubleClickExitDominator(val mActivity: AppCompatActivity, val clickedCall
             mHandler?.postDelayed({
                 isOnKeyBacking = false
                 doubleClicked = false
-            }, 2000)
+            }, 1000)
             return true
         }
     }
