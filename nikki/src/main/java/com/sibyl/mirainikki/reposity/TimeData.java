@@ -14,8 +14,9 @@ public class TimeData {
     final public static String LAST_WEEK_OF_YEAR = "LAST_WEEK_OF_YEAR";//上次是一年中的第几周
     final public static String LAST_DAY = "LAST_DAY";
     final public static String LAST_YEAR = "LAST_YEAR";
+    final public static String LAST_TIME= "LAST_TIME";
 
-    public static Calendar calendar;
+//    public static Calendar calendar;
     public static String date;// 2017-03-01-【水】
     public static String time;// hour+"時"+minute+"分"
     public static String weekOfYear;//是一年的第几周（用于比较是否是同一周
@@ -24,7 +25,7 @@ public class TimeData {
      * 初始化上面各时间值
      */
     public static void initNow(){
-        calendar = Calendar.getInstance();
+//        calendar = Calendar.getInstance();
         date = makeDate();
         time = makeTime();
         weekOfYear = makeWeekOfYear();
@@ -34,12 +35,12 @@ public class TimeData {
      * 计算日期
      */
     public static String makeDate(){
-        int year = calendar.get(Calendar.YEAR);
-        int monthNum = calendar.get(Calendar.MONTH)+1;//月份
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        int monthNum = Calendar.getInstance().get(Calendar.MONTH)+1;//月份
         String month = String.format("%02d",monthNum);//使成为两位数，不足的话前面补零
-        int dayNum = calendar.get(Calendar.DAY_OF_MONTH);//日期
+        int dayNum = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);//日期
         String day = String.format("%02d",dayNum);
-        int weekday = calendar.get(Calendar.DAY_OF_WEEK);//星期
+        int weekday = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);//星期
 
         String weekdayStr = "";
         switch (weekday){
@@ -74,8 +75,8 @@ public class TimeData {
      * 计算时刻
      */
     public static String makeTime(){
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        int minute = Calendar.getInstance().get(Calendar.MINUTE);
 
         return hour+"時"+minute+"分";
     }
@@ -84,7 +85,7 @@ public class TimeData {
      * 计算日期是一年中的第几周
      * */
     public static String makeWeekOfYear(){
-        return calendar.get(Calendar.WEEK_OF_YEAR) + "";
+        return Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) + "";
     }
 
     public static String getWeekOfYear() {
@@ -132,11 +133,12 @@ public class TimeData {
     }
 
     /**保存所有日期标记到prefs*/
-    public static void saveAllDatePrefs(String date,String yearMonth,String weekOfYear,String year){
+    public static void saveAllDatePrefs(String date,String yearMonth,String weekOfYear,String year,String time){
         PreferHelper.getInstance().setString(LAST_DAY,date);
         PreferHelper.getInstance().setString(LAST_MONTH,yearMonth);
         PreferHelper.getInstance().setString(LAST_WEEK_OF_YEAR,weekOfYear);
         PreferHelper.getInstance().setString(LAST_YEAR,year);
+        PreferHelper.getInstance().setString(LAST_TIME,time);
     }
 
 }
