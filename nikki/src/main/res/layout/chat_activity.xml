@@ -50,12 +50,19 @@
             </androidx.appcompat.widget.Toolbar>
         </RelativeLayout>
 
-        <!--ChatList-->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/chatRv"
+        <!--ChatList Container-->
+        <!--android:background="@mipmap/ic_launcher"-->
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1">
+
+            <!--ChatList-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chatRv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
 
         <!--输入栏-->
         <LinearLayout
@@ -74,12 +81,12 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                android:imeOptions="actionSend"
                 android:background="@drawable/input_background"
+                android:imeOptions="actionSend"
                 android:paddingLeft="18dp"
                 android:paddingRight="18dp"
-                android:textSize="16sp"
-                android:text="@={chatModel.inputText}" />
+                android:text="@={chatModel.inputText}"
+                android:textSize="16sp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
