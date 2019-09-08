@@ -25,7 +25,6 @@ import com.sibyl.mirainikki.activity.chatActivity.util.fingerCheck
 import com.sibyl.mirainikki.activity.chatActivity.util.openNikkiFile
 import com.sibyl.mirainikki.base.BaseActivity
 import com.sibyl.mirainikki.databinding.ChatActivityBinding
-import com.sibyl.mirainikki.reposity.FileData
 
 /**
  * @author Sasuke on 2019-8-30 0030.
@@ -158,7 +157,7 @@ class ChatActivity : BaseActivity() {
         }
         //如果有一条日记
         if (model.nikkiFilesList.size == 1) {
-            openNikkiFile(this, FileData.nikkiFile)//如果只有一个文件，那就直接打开就完事了
+            openNikkiFile(this, model.nikkiFilesList.first()/*FileData.getNikkiFile()*/)//如果只有一个文件，那就直接打开就完事了
         }
         //如果大于一条，那就显示列表，供选择哪一年
         if (model.nikkiFilesList.size > 1) {

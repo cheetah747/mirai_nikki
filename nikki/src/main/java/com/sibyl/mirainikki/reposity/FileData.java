@@ -17,7 +17,7 @@ import java.util.Date;
  */
 public class FileData {
     public static File sdFile;
-    public static File nikkiFile;//应该是当前年份的mirai文件
+    private static File nikkiFile;//应该是当前年份的mirai文件
     public static File miraiCacheFile;//用来存系统剪切板里的文字的，写到txt里，然后再把txt用solid explorer传到电脑，实现手机->电脑的剪切板同步。
     public static File rootFile;
     public static String tail = ".mirai";
@@ -55,11 +55,12 @@ public class FileData {
             TimeData.initNow();
         }
         //就直接放在应用目录的 /files 文件夹里算了。。。
-        String nikkiFilePath = rootFile.getAbsolutePath().toString()
-//                                +File.separator+TimeData.getYearMonth()
-//                                +File.separator+TimeData.getDate() + tail;
-                                    +File.separator +TimeData.getYear() + tail;
-        nikkiFile = new File(nikkiFilePath);
+        getNikkiFile();
+//        String nikkiFilePath = rootFile.getAbsolutePath().toString()
+////                                +File.separator+TimeData.getYearMonth()
+////                                +File.separator+TimeData.getDate() + tail;
+//                                    +File.separator +TimeData.getYear() + tail;
+//        nikkiFile = new File(nikkiFilePath);
 
         String miraiCacheFilePath = sdFile.getAbsolutePath().toString() + File.separator + "0カード" + File.separator + "MiraiCache.txt";
         miraiCacheFile = new File(miraiCacheFilePath);
@@ -101,6 +102,12 @@ public class FileData {
 
 
     public static File getNikkiFile() {
+        //如果年份有变化，那就需要重新用TimeData.getYear()再获取一下，不能直接读静态变量
+        String nikkiFilePath = rootFile.getAbsolutePath().toString()
+//                                +File.separator+TimeData.getYearMonth()
+//                                +File.separator+TimeData.getDate() + tail;
+                +File.separator +TimeData.getYear() + tail;
+        nikkiFile = new File(nikkiFilePath);
         return nikkiFile;
     }
 
