@@ -124,6 +124,6 @@ public class FileData {
     }
 
     public static String getBackgroundImgCache(){
-        return FileData.getRootFile().getAbsolutePath() + File.separator + "BACKGROUND";
+        return FileData.getRootFile().getAbsolutePath() + File.separator + "BACKGROUND.JPG";
     }
 }

@@ -205,6 +205,8 @@ class ChatActivity : BaseActivity() {
 
     fun start() {
         picker = PhotoPickDominator(this)
+        //一进来就初始化背景图
+        model.backgroundPath.set(FileData.getBackgroundImgCache())
         Handler().postDelayed({
             model.sendMsg(resources.getString(R.string.welcome_to_miraimikki), false)
         }, 500)
@@ -212,17 +214,19 @@ class ChatActivity : BaseActivity() {
 //        model.background.set( /*FileData.getRootFile().canonicalPath + "/background.jpg"*/"")
     }
 
+
+    var photoPathTemp: String? = ""
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             PHOTO_REQUEST_GALLERY -> {
-                val photoPath = picker?.onPhotoPathResult(this, requestCode, resultCode, data)
+                photoPathTemp = picker?.onPhotoPathResult(this, requestCode, resultCode, data)
                 //裁剪图片
-                photoPath.takeIf { !it.isNullOrBlank() }?.let {
+                photoPathTemp.takeIf { !it.isNullOrBlank() }?.let {
                     picker?.cropPhoto(this,
                             FuckGoogleAdaptUtil.android7AdaptUri(
                                     this,
-                                    FileData.fileProviderAuth, File(photoPath)),
+                                    FileData.fileProviderAuth, File(photoPathTemp)),
                             binding.chatContainerLayout.measuredWidth,
                             binding.chatContainerLayout.measuredHeight
                     )
@@ -240,7 +244,9 @@ class ChatActivity : BaseActivity() {
                     }
                     photo?.let { FileCache.saveBitmap(it, FileData.getBackgroundImgCache()) }
                     model.backgroundPath.set(FileData.getBackgroundImgCache())
-                    Handler().postDelayed({ model.sendMsg("背景更新しました", false) }, 500)
+                    //删掉中间缓存图片
+                    photoPathTemp?.takeIf { File(it).exists() }?.let { File(it).delete() }
+                    Handler().postDelayed({ model.sendMsg("背景更新しました", false) }, 800)
                 }
             }
 

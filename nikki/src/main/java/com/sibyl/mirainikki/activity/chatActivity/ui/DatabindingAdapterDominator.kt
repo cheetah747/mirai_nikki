@@ -3,6 +3,8 @@ package com.sibyl.mirainikki.activity.chatActivity.ui
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 
 /**
  * @author Sasuke on 2019/5/4.
@@ -18,6 +20,10 @@ class DatabindingAdapterDominator {
             imageUrl?.let {
                 Glide.with(iv.context).load(imageUrl)
                         .centerCrop()
+                        .apply(RequestOptions().apply {
+                            diskCacheStrategy(DiskCacheStrategy.NONE)//禁用磁盘缓存
+                            skipMemoryCache(true)//禁用内存缓存
+                        })
                         .into(iv)
             }
         }
