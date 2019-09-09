@@ -25,6 +25,7 @@ import com.sibyl.mirainikki.activity.chatActivity.util.fingerCheck
 import com.sibyl.mirainikki.activity.chatActivity.util.openNikkiFile
 import com.sibyl.mirainikki.base.BaseActivity
 import com.sibyl.mirainikki.databinding.ChatActivityBinding
+import com.sibyl.mirainikki.reposity.FileData
 
 /**
  * @author Sasuke on 2019-8-30 0030.
@@ -179,10 +180,10 @@ class ChatActivity : BaseActivity() {
         //你都没显示在最前，那就不需要执行后面的了
         if (isPaused) return true
         //如果正在保存，那就不执行自定义双击操作，免得存重复了。。。
-        if (model.isSavingFile.value!!){
+        if (model.isSavingFile.value!!) {
             return true
         }
-        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             return doubleClickExitDominator.onKeyDown(keyCode, event)
         }
         return super.onKeyDown(keyCode, event)
@@ -192,6 +193,8 @@ class ChatActivity : BaseActivity() {
         Handler().postDelayed({
             model.sendMsg(resources.getString(R.string.welcome_to_miraimikki), false)
         }, 500)
+//        binding.sasukeUrl = FileData.getRootFile().canonicalPath + "/background.jpg"
+        model.background.set( FileData.getRootFile().canonicalPath + "/background.jpg")
     }
 
 

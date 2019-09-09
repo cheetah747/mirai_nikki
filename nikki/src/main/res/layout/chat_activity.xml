@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -56,6 +57,12 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
+
+            <ImageView
+                bind:sasukeUrl="@{chatModel.background}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
 
             <!--ChatList-->
             <androidx.recyclerview.widget.RecyclerView

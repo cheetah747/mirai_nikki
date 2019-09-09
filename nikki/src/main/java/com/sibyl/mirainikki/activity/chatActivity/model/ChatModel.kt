@@ -49,6 +49,9 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
     /**正在保存*/
     var isSavingFile = MutableLiveData<Boolean>().apply { value = false }
 
+    /**聊天背景*/
+    var background = ObservableField<String>()
+
     /**発信*/
     fun sendMsg(msg: String, isMe: Boolean = true, view: View? = null) {
         if (msg.isBlank()) return
