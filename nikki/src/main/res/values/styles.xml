@@ -7,6 +7,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@mipmap/splash</item>
     </style>
 
     <!--<style name="NoActionBarAct" parent="Theme.AppCompat.Light.NoActionBar"></style>-->
@@ -23,7 +24,6 @@
     <!--</style>-->
     <!--<item name="android:windowEnterAnimation">@anim/dialog_enter_anim</item>-->
     <!--<item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>-->
-    <!--<item name="android:windowBackground">@color/transparent_background</item>-->
 
     <style name="horizonal_line">
         <item name="android:layout_width">fill_parent</item>
