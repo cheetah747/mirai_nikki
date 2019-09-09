@@ -88,7 +88,7 @@
                 android:layout_height="45dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginTop="4dp"
-                android:src="@mipmap/ic_launcher_circle" />
+                android:src="@mipmap/default_icon" />
         </LinearLayout>
 
 

@@ -205,6 +205,7 @@ class ChatActivity : BaseActivity() {
 
     fun start() {
         picker = PhotoPickDominator(this)
+        window.setBackgroundDrawableResource(R.color.window_background_color)
         //一进来就初始化背景图
         model.backgroundPath.set(FileData.getBackgroundImgCache())
         Handler().postDelayed({
