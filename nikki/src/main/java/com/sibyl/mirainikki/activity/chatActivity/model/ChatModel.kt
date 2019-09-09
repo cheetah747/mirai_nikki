@@ -55,6 +55,12 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
     /**聊天背景*/
     var backgroundPath = ObservableField<String>()
 
+    /**You头像*/
+    var youIcon = ObservableField<String>("")
+
+    /**Me头像*/
+    var meIcon = ObservableField<String>("")
+
     /**発信*/
     fun sendMsg(msg: String, isMe: Boolean = true, view: View? = null) {
         if (msg.isBlank()) return
@@ -92,7 +98,7 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
             return
         }
         //设置背景 ========================
-        if (dataList.value?.last()?.msg ?: "" in arrayOf("背景")) {
+        if (dataList.value?.last()?.msg ?: "" in arrayOf("背景","壁纸")) {
             dataList.value?.last()?.isOrder = true
             Handler().postDelayed({
                 sendMsg("ピクチャを選択してください",false)

@@ -17,7 +17,7 @@ class DatabindingAdapterDominator {
         @JvmStatic
         @BindingAdapter("bind:sasukeUrl")
         fun loadImage(iv: ImageView, imageUrl: String?) {
-            imageUrl?.let {
+            imageUrl?.takeIf { it.isNotBlank() }?.let {
                 Glide.with(iv.context).load(imageUrl)
                         .centerCrop()
                         .apply(RequestOptions().apply {

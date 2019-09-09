@@ -9,8 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sibyl.mirainikki.R
 import com.sibyl.mirainikki.activity.chatActivity.model.ChatModel
-import com.sibyl.mirainikki.util.copy2Clipboard
 import com.sibyl.mirainikki.databinding.ChatItemBinding
+import com.sibyl.mirainikki.util.copy2Clipboard
 
 /**
  * @author Sasuke on 2019-9-2 0002.
@@ -44,6 +44,7 @@ class ChatAdapter(val context: Context, val chatModel: ChatModel) : RecyclerView
             isMe = dataList!![pos].isMe
             time = if (timeCache != dataList!![pos].time) dataList!![pos].time.apply { timeCache = this } else ""
             msg = dataList!![pos].msg
+            model = chatModel
             containerLayout.setOnClickListener { hideKeyboard(context, holder.view) }
             dataList!![pos].view?.let { view ->
                 view.parent?.let {

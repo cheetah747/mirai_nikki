@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data
@@ -22,6 +23,10 @@
             name="msg"
             type="String" />
 
+        <variable
+            name="model"
+            type="com.sibyl.mirainikki.activity.chatActivity.model.ChatModel" />
+
     </data>
 
     <LinearLayout
@@ -36,10 +41,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="@{TextUtils.isEmpty(time)? View.GONE: View.VISIBLE}"
             android:gravity="center"
+            android:paddingTop="12dp"
             android:paddingBottom="6dp"
-            android:paddingTop="12dp">
+            android:visibility="@{TextUtils.isEmpty(time)? View.GONE: View.VISIBLE}">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -47,8 +52,8 @@
                 android:background="@drawable/time_corner_rect"
                 android:gravity="center"
                 android:paddingLeft="8dp"
-                android:paddingRight="8dp"
                 android:paddingTop="1dp"
+                android:paddingRight="8dp"
                 android:paddingBottom="1dp"
                 android:text="@{time}"
                 android:textColor="@color/white"
@@ -88,7 +93,8 @@
                 android:layout_height="45dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginTop="4dp"
-                android:src="@mipmap/default_icon" />
+                android:src="@mipmap/default_icon"
+                bind:sasukeUrl="@{model.meIcon}" />
         </LinearLayout>
 
 
@@ -105,6 +111,7 @@
                 android:layout_height="45dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="6dp"
+                bind:sasukeUrl="@{model.youIcon}"
                 android:src="@mipmap/ic_launcher_circle" />
 
             <!--聊天气泡容器-->
