@@ -27,8 +27,7 @@ import com.sibyl.mirainikki.base.BaseActivity
 import com.sibyl.mirainikki.databinding.ChatActivityBinding
 import com.sibyl.mirainikki.reposity.FileData
 import com.sibyl.mirainikki.util.*
-import com.sibyl.mirainikki.util.PhotoPickDominator.CROP_REQUEST
-import com.sibyl.mirainikki.util.PhotoPickDominator.PHOTO_REQUEST_GALLERY
+import com.sibyl.mirainikki.util.PhotoPickDominator.*
 import java.io.File
 
 /**
@@ -156,10 +155,8 @@ class ChatActivity : BaseActivity() {
         })
 
         //选择背景图片
-        model.isSelectPhoto.observe(this, Observer {
-            if (it) {
-                picker?.selectByLocal()
-            }
+        model.selectLocalPhoto.observe(this, Observer {
+            picker?.selectByLocal(it)
         })
     }
 
@@ -207,7 +204,6 @@ class ChatActivity : BaseActivity() {
         picker = PhotoPickDominator(this)
         window.setBackgroundDrawableResource(R.color.window_background_color)
         //一进来就初始化背景图
-        model.backgroundPath.set(FileData.getBackgroundImgCache())
         Handler().postDelayed({
             model.sendMsg(resources.getString(R.string.welcome_to_miraimikki), false)
         }, 500)
@@ -220,20 +216,7 @@ class ChatActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            PHOTO_REQUEST_GALLERY -> {
-                photoPathTemp = picker?.onPhotoPathResult(this, requestCode, resultCode, data)
-                //裁剪图片
-                photoPathTemp.takeIf { !it.isNullOrBlank() }?.let {
-                    picker?.cropPhoto(this,
-                            FuckGoogleAdaptUtil.android7AdaptUri(
-                                    this,
-                                    FileData.fileProviderAuth, File(photoPathTemp)),
-                            binding.chatContainerLayout.measuredWidth,
-                            binding.chatContainerLayout.measuredHeight
-                    )
-                }
-
-            }
+            //裁剪返回======================================
             CROP_REQUEST -> {
                 if (data != null) {
                     var photo: Bitmap? = null
@@ -243,11 +226,45 @@ class ChatActivity : BaseActivity() {
                     if (photo == null && data.data != null) {
                         photo = BitmapFactory.decodeStream(getContentResolver().openInputStream(data.data))
                     }
-                    photo?.let { FileCache.saveBitmap(it, FileData.getBackgroundImgCache()) }
-                    model.backgroundPath.set(FileData.getBackgroundImgCache())
+                    //图像提取出来了，可以开始设置了
+                    when (model.selectLocalPhoto.value) {
+                        PHOTO_REQUEST_GALLERY -> {//设置背景
+                            photo?.let { FileCache.saveBitmap(it, FileData.getBackgroundImgCache()) }
+                            model.backgroundPath.set(FileData.getBackgroundImgCache())
+                        }
+                        PHOTO_REQUEST_YOU_ICON -> {//设置你的头像
+                            photo?.let { FileCache.saveBitmap(it, FileData.getYouIconCache()) }
+                            model.youIcon.set(FileData.getYouIconCache())
+                        }
+                        PHOTO_REQUEST_ME_ICON -> {//设置我的头像
+                            photo?.let { FileCache.saveBitmap(it, FileData.getMeIconCache()) }
+                            model.meIcon.set(FileData.getMeIconCache())
+                        }
+                    }
+
                     //删掉中间缓存图片
                     photoPathTemp?.takeIf { File(it).exists() }?.let { File(it).delete() }
-                    Handler().postDelayed({ model.sendMsg("背景更新しました", false) }, 800)
+                    Handler().postDelayed({
+                        model.sendMsg("${when (model.selectLocalPhoto.value) {
+                            PHOTO_REQUEST_YOU_ICON -> "あたしのアイコン"
+                            PHOTO_REQUEST_ME_ICON -> "あなたのアイコン"
+                            else ->"背景"
+                        }
+                        }が更新しました", false)
+                    }, 800)
+                }
+            }
+            //选图返回======================================
+            else -> {
+                photoPathTemp = picker?.onPhotoPathResult(this, requestCode, resultCode, data)
+                photoPathTemp?.takeIf { it.isNotBlank() }?.let {
+                    picker?.cropPhoto(this,
+                            FuckGoogleAdaptUtil.android7AdaptUri(
+                                    this,
+                                    FileData.fileProviderAuth, File(photoPathTemp)),
+                            if (requestCode == PHOTO_REQUEST_GALLERY) binding.chatContainerLayout.measuredWidth else 1,
+                            if (requestCode == PHOTO_REQUEST_GALLERY) binding.chatContainerLayout.measuredHeight else 1
+                    )
                 }
             }
 

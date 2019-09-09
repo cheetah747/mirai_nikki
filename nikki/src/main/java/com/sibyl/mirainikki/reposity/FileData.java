@@ -126,4 +126,12 @@ public class FileData {
     public static String getBackgroundImgCache(){
         return FileData.getRootFile().getAbsolutePath() + File.separator + "BACKGROUND.JPG";
     }
+
+    public static String getYouIconCache(){
+        return FileData.getRootFile().getAbsolutePath() + File.separator + "YOU.JPG";
+    }
+
+    public static String getMeIconCache(){
+        return FileData.getRootFile().getAbsolutePath() + File.separator + "ME.JPG";
+    }
 }

@@ -31,12 +31,15 @@ public class PhotoPickDominator {
     /**
      * 从相册选取
      */
-    final public static int PHOTO_REQUEST_GALLERY = 7450;
+    final public static int PHOTO_REQUEST_GALLERY = 7450;//一般选择
+    final public static int PHOTO_REQUEST_YOU_ICON = 7451;//选你的头像
+    final public static int PHOTO_REQUEST_ME_ICON = 7452;//选我的头像
+
 
     /***
      * 裁剪
      */
-    final public static int CROP_REQUEST = 7451;
+    final public static int CROP_REQUEST = 7460;
 
     //    private BottomDialog mDialog;
     private AppCompatActivity mActivity;
@@ -77,10 +80,10 @@ public class PhotoPickDominator {
     /**
      * 单独从相册获取
      */
-    public void selectByLocal() {
+    public void selectByLocal(int selectType) {
         Intent intent = new Intent(Intent.ACTION_PICK, null);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-        mActivity.startActivityForResult(intent, PHOTO_REQUEST_GALLERY);
+        mActivity.startActivityForResult(intent, selectType);
     }
 
 
@@ -98,6 +101,8 @@ public class PhotoPickDominator {
                 }
                 break;
             //相册
+            case PHOTO_REQUEST_YOU_ICON:
+            case PHOTO_REQUEST_ME_ICON:
             case PHOTO_REQUEST_GALLERY:
                 if (resultCode == Activity.RESULT_OK) {
                     String imgPath;
@@ -124,7 +129,7 @@ public class PhotoPickDominator {
                         imgPath = FuckGoogleAdaptUtil.getRealFilePath(context, data.getData());
                     }
 
-                    String picName = "CROP_CACHE.jpg";
+                    String picName = "CACHE_FOR_CROP.JPG";
                     FileCache.copyFile(imgPath, mPhotoDir + File.separator + picName);
                     return mPhotoDir + File.separator + picName;
                 }

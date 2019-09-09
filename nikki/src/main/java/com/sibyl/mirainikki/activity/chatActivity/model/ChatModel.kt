@@ -10,7 +10,9 @@ import com.sibyl.mirainikki.MyApplication.MyApplication
 import com.sibyl.mirainikki.R
 import com.sibyl.mirainikki.activity.chatActivity.repo.ChatRepo
 import com.sibyl.mirainikki.activity.chatActivity.ui.ChatDataItem
+import com.sibyl.mirainikki.reposity.FileData
 import com.sibyl.mirainikki.reposity.TimeData
+import com.sibyl.mirainikki.util.PhotoPickDominator
 import kotlinx.coroutines.launch
 
 /**
@@ -49,17 +51,17 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
     /**正在保存*/
     var isSavingFile = MutableLiveData<Boolean>().apply { value = false }
 
-    /**选择图片*/
-    var isSelectPhoto = MutableLiveData<Boolean>()
+    /**选择图片，赋值为图片类型*/
+    var selectLocalPhoto = MutableLiveData<Int>()
 
     /**聊天背景*/
-    var backgroundPath = ObservableField<String>()
+    var backgroundPath = ObservableField<String>(FileData.getBackgroundImgCache())
 
     /**You头像*/
-    var youIcon = ObservableField<String>("")
+    var youIcon = ObservableField<String>(FileData.getYouIconCache())
 
     /**Me头像*/
-    var meIcon = ObservableField<String>("")
+    var meIcon = ObservableField<String>(FileData.getMeIconCache())
 
     /**発信*/
     fun sendMsg(msg: String, isMe: Boolean = true, view: View? = null) {
@@ -84,6 +86,21 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
     /**発信ボタンクリックリスナー*/
     fun onSendClick(view: View) = sendMsg(inputText.get()!!)
 
+
+    /**
+     * 换你的头像
+     */
+    fun onClickYouIcon(view: View){
+        selectLocalPhoto.value = PhotoPickDominator.PHOTO_REQUEST_YOU_ICON
+    }
+
+    /**
+     * 换我的头像
+     */
+    fun onClickMeIcon(view: View){
+        selectLocalPhoto.value = PhotoPickDominator.PHOTO_REQUEST_ME_ICON
+    }
+
     /**ユーザーが入力したオーダーに応じる*/
     private fun checkOrder(orderInput: String) {//返回该条输入是否是指令
         //只检查我自己的消息，其它消息跳过
@@ -102,7 +119,7 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
             dataList.value?.last()?.isOrder = true
             Handler().postDelayed({
                 sendMsg("ピクチャを選択してください",false)
-                isSelectPhoto.value = true
+                selectLocalPhoto.value = PhotoPickDominator.PHOTO_REQUEST_GALLERY
             }, 500)
             return
         }

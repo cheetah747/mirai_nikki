@@ -5,6 +5,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import java.io.File
 
 /**
  * @author Sasuke on 2019/5/4.
@@ -17,7 +18,7 @@ class DatabindingAdapterDominator {
         @JvmStatic
         @BindingAdapter("bind:sasukeUrl")
         fun loadImage(iv: ImageView, imageUrl: String?) {
-            imageUrl?.takeIf { it.isNotBlank() }?.let {
+            imageUrl?.takeIf { it.isNotBlank() && File(it).exists()}?.let {
                 Glide.with(iv.context).load(imageUrl)
                         .centerCrop()
                         .apply(RequestOptions().apply {

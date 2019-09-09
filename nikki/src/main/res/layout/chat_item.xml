@@ -89,6 +89,7 @@
 
             <!--头像-->
             <de.hdodenhof.circleimageview.CircleImageView
+                android:onClick="@{model::onClickMeIcon}"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_marginLeft="6dp"
@@ -107,6 +108,7 @@
             android:visibility="@{(!isMe &amp;&amp; !TextUtils.isEmpty(msg))?View.VISIBLE: View.GONE}">
             <!--头像-->
             <de.hdodenhof.circleimageview.CircleImageView
+                android:onClick="@{model::onClickYouIcon}"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_marginTop="4dp"
