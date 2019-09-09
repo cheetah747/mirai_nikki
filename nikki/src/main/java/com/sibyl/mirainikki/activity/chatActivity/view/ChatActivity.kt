@@ -1,5 +1,8 @@
 package com.sibyl.mirainikki.activity.chatActivity.view
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE
@@ -20,12 +23,13 @@ import com.sibyl.mirainikki.activity.chatActivity.model.ChatModel
 import com.sibyl.mirainikki.activity.chatActivity.repo.ChatRepo
 import com.sibyl.mirainikki.activity.chatActivity.ui.ChatAdapter
 import com.sibyl.mirainikki.activity.chatActivity.ui.CustomLinearLayoutManager
-import com.sibyl.mirainikki.activity.chatActivity.util.DoubleClickExitDominator
-import com.sibyl.mirainikki.activity.chatActivity.util.fingerCheck
-import com.sibyl.mirainikki.activity.chatActivity.util.openNikkiFile
 import com.sibyl.mirainikki.base.BaseActivity
 import com.sibyl.mirainikki.databinding.ChatActivityBinding
 import com.sibyl.mirainikki.reposity.FileData
+import com.sibyl.mirainikki.util.*
+import com.sibyl.mirainikki.util.PhotoPickDominator.CROP_REQUEST
+import com.sibyl.mirainikki.util.PhotoPickDominator.PHOTO_REQUEST_GALLERY
+import java.io.File
 
 /**
  * @author Sasuke on 2019-8-30 0030.
@@ -38,6 +42,9 @@ class ChatActivity : BaseActivity() {
 
     /**当前界面是否不在最前*/
     var isPaused = false
+
+    var picker: PhotoPickDominator? = null
+
 
     val doubleClickExitDominator by lazy {
         DoubleClickExitDominator(this,
@@ -147,6 +154,13 @@ class ChatActivity : BaseActivity() {
         model.isSavingFile.observe(this, Observer {
             binding.inputEditText.run { setText(""); isFocusable = !it;isFocusableInTouchMode = !it }
         })
+
+        //选择背景图片
+        model.isSelectPhoto.observe(this, Observer {
+            if (it) {
+                picker?.selectByLocal()
+            }
+        })
     }
 
 
@@ -190,12 +204,47 @@ class ChatActivity : BaseActivity() {
     }
 
     fun start() {
+        picker = PhotoPickDominator(this)
         Handler().postDelayed({
             model.sendMsg(resources.getString(R.string.welcome_to_miraimikki), false)
         }, 500)
 //        binding.sasukeUrl = FileData.getRootFile().canonicalPath + "/background.jpg"
-        model.background.set( FileData.getRootFile().canonicalPath + "/background.jpg")
+//        model.background.set( /*FileData.getRootFile().canonicalPath + "/background.jpg"*/"")
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            PHOTO_REQUEST_GALLERY -> {
+                val photoPath = picker?.onPhotoPathResult(this, requestCode, resultCode, data)
+                //裁剪图片
+                photoPath.takeIf { !it.isNullOrBlank() }?.let {
+                    picker?.cropPhoto(this,
+                            FuckGoogleAdaptUtil.android7AdaptUri(
+                                    this,
+                                    FileData.fileProviderAuth, File(photoPath)),
+                            binding.chatContainerLayout.measuredWidth,
+                            binding.chatContainerLayout.measuredHeight
+                    )
+                }
 
+            }
+            CROP_REQUEST -> {
+                if (data != null) {
+                    var photo: Bitmap? = null
+                    if (data.extras != null) {
+                        photo = data.extras.get("data") as Bitmap?
+                    }
+                    if (photo == null && data.data != null) {
+                        photo = BitmapFactory.decodeStream(getContentResolver().openInputStream(data.data))
+                    }
+                    photo?.let { FileCache.saveBitmap(it, FileData.getBackgroundImgCache()) }
+                    model.backgroundPath.set(FileData.getBackgroundImgCache())
+                    Handler().postDelayed({ model.sendMsg("背景更新しました", false) }, 500)
+                }
+            }
+
+        }
+
+    }
 }

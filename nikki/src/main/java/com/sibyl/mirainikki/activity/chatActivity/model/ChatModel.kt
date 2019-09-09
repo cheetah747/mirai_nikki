@@ -49,8 +49,11 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
     /**正在保存*/
     var isSavingFile = MutableLiveData<Boolean>().apply { value = false }
 
+    /**选择图片*/
+    var isSelectPhoto = MutableLiveData<Boolean>()
+
     /**聊天背景*/
-    var background = ObservableField<String>()
+    var backgroundPath = ObservableField<String>()
 
     /**発信*/
     fun sendMsg(msg: String, isMe: Boolean = true, view: View? = null) {
@@ -81,19 +84,29 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
         if (!(dataList.value?.last()?.isMe ?: false)) return
 
         //查看历史 (未来)========================
-        if (dataList.value?.last()?.msg ?: "" in arrayOf(app.resources.getString(R.string.mirai),"みらい","ミライ")) {
+        if (dataList.value?.last()?.msg ?: "" in arrayOf(app.resources.getString(R.string.mirai), "みらい", "ミライ")) {
             dataList.value?.last()?.isOrder = true
             Handler().postDelayed({
                 isCheckFinger.value = true
             }, 500)
             return
         }
+        //设置背景 ========================
+        if (dataList.value?.last()?.msg ?: "" in arrayOf("背景")) {
+            dataList.value?.last()?.isOrder = true
+            Handler().postDelayed({
+                sendMsg("ピクチャを選択してください",false)
+                isSelectPhoto.value = true
+            }, 500)
+            return
+        }
+
         try {
             dataList.value?.get(dataList.value!!.size - 2)?.msg?.run {
                 //撤回消息=====================
                 if (endsWith(app.resources.getString(R.string.delete_msg))) {
                     dataList?.value?.last()?.isOrder = true//指令标记
-                    if (orderInput in arrayOf("y", "Y", "是", "はい","うん","あ")) {//确定
+                    if (orderInput in arrayOf("y", "Y", "是", "はい", "うん", "あ")) {//确定
                         dataList.value?.get(longClickedPos)?.msg = ""
                         dataList.value?.get(longClickedPos)?.time = app.resources.getString(R.string.msg_is_deleted)
                         refreshRvPos.value = longClickedPos
@@ -128,7 +141,7 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
         } catch (e: Exception) {
             sendMsg("${e.message}", false)
             //如果并不是保存异常，而只是单纯的没有内容，不需要存，那就直接退出
-            if (e.message == app.resources.getString(R.string.empty_straight_exit)){
+            if (e.message == app.resources.getString(R.string.empty_straight_exit)) {
                 Handler().postDelayed({ isFinish.value = true }, 600)
             }
             e.printStackTrace()

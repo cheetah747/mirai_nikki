@@ -1,7 +1,6 @@
 package com.sibyl.mirainikki.activity.chatActivity.ui
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sibyl.mirainikki.R
 import com.sibyl.mirainikki.activity.chatActivity.model.ChatModel
-import com.sibyl.mirainikki.activity.chatActivity.util.copy2Clipboard
+import com.sibyl.mirainikki.util.copy2Clipboard
 import com.sibyl.mirainikki.databinding.ChatItemBinding
 
 /**

@@ -1,4 +1,4 @@
-package com.sibyl.mirainikki.activity.chatActivity.util
+package com.sibyl.mirainikki.util
 
 import android.os.Handler
 import android.os.Looper

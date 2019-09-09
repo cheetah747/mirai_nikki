@@ -1,4 +1,4 @@
-package com.sibyl.mirainikki.activity.chatActivity.util
+package com.sibyl.mirainikki.util
 
 import android.content.Context
 import android.content.Intent
