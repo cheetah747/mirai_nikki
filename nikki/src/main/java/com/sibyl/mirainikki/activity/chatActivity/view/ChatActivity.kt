@@ -134,7 +134,7 @@ class ChatActivity : BaseActivity() {
                             model.sendMsg("認証成功です、すぐ未来一覧を表示します", false)
                             Handler().postDelayed({
                                 showNikkiList()
-                            }, 1_000)
+                            }, 500)
                         },
                         { model.sendMsg("認証失敗です", false) }
                 )
@@ -249,7 +249,7 @@ class ChatActivity : BaseActivity() {
                         model.sendMsg("${when (model.selectLocalPhoto.value) {
                             PHOTO_REQUEST_YOU_ICON -> "あたしのアイコン"
                             PHOTO_REQUEST_ME_ICON -> "あなたのアイコン"
-                            else ->"背景"
+                            else -> "背景"
                         }
                         }が更新しました", false)
                     }, 800)

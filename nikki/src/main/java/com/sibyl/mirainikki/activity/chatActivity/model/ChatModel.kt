@@ -157,7 +157,7 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
             val result = repo.saveNikki(dataList.value?.filter { it.isMsg4Save() })
             if (result) {
                 sendMsg("セーブ成功", false)
-                Handler().postDelayed({ isFinish.value = true }, 600)
+                Handler().postDelayed({ isFinish.value = true }, 800)
             } else {
                 sendMsg("セーブ失敗", false)
             }
@@ -165,7 +165,7 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
             sendMsg("${e.message}", false)
             //如果并不是保存异常，而只是单纯的没有内容，不需要存，那就直接退出
             if (e.message == app.resources.getString(R.string.empty_straight_exit)) {
-                Handler().postDelayed({ isFinish.value = true }, 600)
+                Handler().postDelayed({ isFinish.value = true }, 800)
             }
             e.printStackTrace()
         }
