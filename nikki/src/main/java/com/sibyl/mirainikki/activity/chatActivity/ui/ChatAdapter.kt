@@ -47,6 +47,11 @@ class ChatAdapter(val context: Context, val chatModel: ChatModel) : RecyclerView
             model = chatModel
             item = dataList!![pos]
             containerLayout.setOnClickListener { hideKeyboard(context, holder.view) }
+            //在view为空的时候，如果不手动清除掉，就会因为容器重用而导致本不应该显示view的item显示了view
+            if (dataList!![pos].view == null && chatYouLayout.childCount > 1){
+                chatYouLayout.removeViewAt(1)
+            }
+            //在view不为空的时候，添加view显示出来
             dataList!![pos].view?.let { view ->
                 view.parent?.let {
                     (it as ViewGroup).removeView(view)
