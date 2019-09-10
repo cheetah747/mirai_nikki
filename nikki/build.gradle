@@ -14,8 +14,8 @@ android {
         applicationId "com.sibyl.mirainikki"
         minSdkVersion 28
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
         //以下是高斯模糊相关的API
         renderscriptTargetApi 17
         renderscriptSupportModeEnabled true

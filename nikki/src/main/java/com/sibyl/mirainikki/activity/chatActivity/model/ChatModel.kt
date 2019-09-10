@@ -108,7 +108,7 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
 
         //查看历史 (未来)========================
         if (dataList.value?.last()?.msg ?: "" in arrayOf(app.resources.getString(R.string.mirai), "みらい", "ミライ")) {
-            dataList.value?.last()?.isOrder = true
+            dataList.value?.last()?.isOrder?.set(true)
             Handler().postDelayed({
                 isCheckFinger.value = true
             }, 500)
@@ -116,7 +116,7 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
         }
         //设置背景 ========================
         if (dataList.value?.last()?.msg ?: "" in arrayOf("背景","壁纸")) {
-            dataList.value?.last()?.isOrder = true
+            dataList.value?.last()?.isOrder?.set(true)
             Handler().postDelayed({
                 sendMsg("ピクチャを選択してください",false)
                 selectLocalPhoto.value = PhotoPickDominator.PHOTO_REQUEST_GALLERY
@@ -128,7 +128,7 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
             dataList.value?.get(dataList.value!!.size - 2)?.msg?.run {
                 //撤回消息=====================
                 if (endsWith(app.resources.getString(R.string.delete_msg))) {
-                    dataList?.value?.last()?.isOrder = true//指令标记
+                    dataList?.value?.last()?.isOrder?.set(true)//指令标记
                     if (orderInput in arrayOf("y", "Y", "是", "はい", "うん", "あ")) {//确定
                         dataList.value?.get(longClickedPos)?.msg = ""
                         dataList.value?.get(longClickedPos)?.time = app.resources.getString(R.string.msg_is_deleted)

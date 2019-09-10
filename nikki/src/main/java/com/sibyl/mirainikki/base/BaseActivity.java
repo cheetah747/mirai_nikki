@@ -2,6 +2,7 @@ package com.sibyl.mirainikki.base;
 
 import android.Manifest;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import com.sibyl.mirainikki.reposity.FileData;
  * Created by Sasuke on 2016/6/19.
  */
 public class BaseActivity extends AppCompatActivity {
+    public PermissionCallback permissionCallback;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +33,14 @@ public class BaseActivity extends AppCompatActivity {
         );
     }
 
+    public interface PermissionCallback {
+         void run();
+    }
+
     public void requestPermissions() {
-        String [] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                                                Manifest.permission.READ_EXTERNAL_STORAGE};
-        if (! PermissionsUtil.hasPermission(this, permissions)) {
+        String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE};
+        if (!PermissionsUtil.hasPermission(this, permissions)) {
             PermissionsUtil.requestPermission(this, new PermissionListener() {
                 @Override
                 public void permissionGranted(@NonNull String[] permissions) {
@@ -44,6 +50,9 @@ public class BaseActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     FileData.initFilePath();
+                                    if (permissionCallback != null){
+                                        permissionCallback.run();
+                                    }
                                 }
                             }
                     );

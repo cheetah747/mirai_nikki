@@ -24,6 +24,7 @@ import com.sibyl.mirainikki.activity.chatActivity.repo.ChatRepo
 import com.sibyl.mirainikki.activity.chatActivity.ui.ChatAdapter
 import com.sibyl.mirainikki.activity.chatActivity.ui.CustomLinearLayoutManager
 import com.sibyl.mirainikki.base.BaseActivity
+import com.sibyl.mirainikki.base.BaseActivity.PermissionCallback
 import com.sibyl.mirainikki.databinding.ChatActivityBinding
 import com.sibyl.mirainikki.reposity.FileData
 import com.sibyl.mirainikki.util.*
@@ -71,11 +72,10 @@ class ChatActivity : BaseActivity() {
 //    private lateinit var cancelSignal: CancellationSignal
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        permissionCallback = PermissionCallback { start() }
         super.onCreate(savedInstanceState)
         bind()
         start()
-
-
     }
 
     fun bind() {
@@ -203,6 +203,7 @@ class ChatActivity : BaseActivity() {
     fun start() {
         picker = PhotoPickDominator(this)
         window.setBackgroundDrawableResource(R.color.window_background_color)
+        model.dataList.value?.clear()
         //一进来就初始化背景图
         Handler().postDelayed({
             model.sendMsg(resources.getString(R.string.welcome_to_miraimikki), false)

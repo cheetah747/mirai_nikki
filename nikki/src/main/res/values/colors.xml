@@ -8,6 +8,7 @@
     <color name="white">#fff</color>
     <color name="black">#000</color>
     <color name="window_background_color">#f2f2f2</color>
+    <color name="msg_me_backgroundtint">#0180eb</color>
 
 
 </resources>

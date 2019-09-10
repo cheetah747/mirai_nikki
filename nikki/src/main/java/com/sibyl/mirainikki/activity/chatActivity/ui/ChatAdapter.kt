@@ -45,6 +45,7 @@ class ChatAdapter(val context: Context, val chatModel: ChatModel) : RecyclerView
             time = if (timeCache != dataList!![pos].time) dataList!![pos].time.apply { timeCache = this } else ""
             msg = dataList!![pos].msg
             model = chatModel
+            item = dataList!![pos]
             containerLayout.setOnClickListener { hideKeyboard(context, holder.view) }
             dataList!![pos].view?.let { view ->
                 view.parent?.let {
