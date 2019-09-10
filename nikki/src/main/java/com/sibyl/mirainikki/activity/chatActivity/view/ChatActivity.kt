@@ -48,7 +48,9 @@ class ChatActivity : BaseActivity() {
     val doubleClickExitDominator by lazy {
         DoubleClickExitDominator(this,
                 //点击一次的时候
-                { model.sendMsg("もう一回押すと、セーブして閉じます", false) },
+                {
+                    model.sendMsg("未来数: ${model.dataList.value?.count { it.isMsg4Save() }}, もう一回押すと、セーブして閉じます", false)
+                },
                 //双击的时候
                 {
                     model.sendMsg("セーブしています", false)

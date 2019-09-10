@@ -13,8 +13,8 @@
     <string name="msg_is_deleted_success">撤回しました</string>
     <string name="mirai">未来</string>
     <string name="here_is_all_the_mirai">全ての未来が年別に羅列しました：</string>
-    <string name="empty_alert">あれ？空っぽですよ</string>
-    <string name="empty_straight_exit">空っぽですね、直接に閉じます</string>
+    <string name="empty_alert">あれ？未来なし</string>
+    <string name="empty_straight_exit">未来変更なし、直接に閉じます</string>
 
 
 
