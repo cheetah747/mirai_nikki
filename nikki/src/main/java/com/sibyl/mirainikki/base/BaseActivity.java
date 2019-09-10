@@ -16,7 +16,7 @@ import com.sibyl.mirainikki.reposity.FileData;
  * Created by Sasuke on 2016/6/19.
  */
 public class BaseActivity extends AppCompatActivity {
-    public PermissionCallback permissionCallback;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +33,6 @@ public class BaseActivity extends AppCompatActivity {
         );
     }
 
-    public interface PermissionCallback {
-         void run();
-    }
 
     public void requestPermissions() {
         String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -50,9 +47,6 @@ public class BaseActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     FileData.initFilePath();
-                                    if (permissionCallback != null){
-                                        permissionCallback.run();
-                                    }
                                 }
                             }
                     );
