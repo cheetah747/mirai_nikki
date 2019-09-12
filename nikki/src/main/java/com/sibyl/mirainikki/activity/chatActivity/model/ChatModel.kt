@@ -67,7 +67,7 @@ class ChatModel(val repo: ChatRepo, val app: MyApplication) : ViewModel() {
     fun sendMsg(msg: String, isMe: Boolean = true, view: View? = null) {
         if (msg.isBlank()) return
         dataList.value?.add(ChatDataItem().apply {
-            this.time = TimeData.makeTime()//SimpleDateFormat("HH時mm分").format(Date())
+            this.time = TimeData.makeTime3Min(dataList.value?.lastOrNull()?.time)//SimpleDateFormat("HH時mm分").format(Date())
             this.year = TimeData.getYear()
             this.date = TimeData.makeDate()
             this.yearMonth = this.date.substring(0, 7)

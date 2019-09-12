@@ -4,7 +4,10 @@ import android.text.TextUtils;
 
 import com.sibyl.mirainikki.activity.MainActivity.helper.PreferHelper;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Sasuke on 2016/5/10.
@@ -79,6 +82,33 @@ public class TimeData {
         int minute = Calendar.getInstance().get(Calendar.MINUTE);
 
         return hour+"時"+minute+"分";
+    }
+
+    /**
+     * 计算时刻（如果差距3分钟内，还是按上次时间算）
+     */
+    public static String makeTime3Min(String lastTime){
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        int minute = Calendar.getInstance().get(Calendar.MINUTE);
+        String newTime = hour+"時"+minute+"分";
+        if (lastTime == null){
+            return newTime;
+        }
+
+        try{
+            Date newDate = new SimpleDateFormat("H時m分").parse(newTime);
+            Date lastDate = new SimpleDateFormat("H時m分").parse(lastTime);
+            long gapTime = (newDate.getTime() - lastDate.getTime())/1000/60;
+            if (gapTime >= 3){
+                return newTime;
+            }else{
+                return lastTime;
+            }
+        }catch (ParseException e){
+            e.printStackTrace();
+            return newTime;
+        }
+//        return hour+"時"+minute+"分";
     }
 
     /**
