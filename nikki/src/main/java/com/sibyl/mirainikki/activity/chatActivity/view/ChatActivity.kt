@@ -9,7 +9,6 @@ import android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
-import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -123,23 +122,27 @@ class ChatActivity : BaseActivity() {
         /**校验指纹*/
         model.isCheckFinger.observe(this, Observer {
             if (it) {
-                model.sendMsg("まず生体認証をしてください", false, ImageView(this).apply {
-                    setImageResource(R.drawable.finger_print_logo)
-                    minimumWidth = 0
-                    minimumHeight = 0
-                })
-                fingerCheck(this,
-                        { model.sendMsg("認証キャンセル", false) },
-                        { model.sendMsg("非対応です", false) },
-                        { model.sendMsg("その他のエラーです", false) },
-                        {
-                            model.sendMsg("認証成功です、すぐ未来一覧を表示します", false)
-                            Handler().postDelayed({
-                                showNikkiList()
-                            }, 500)
-                        },
-                        { model.sendMsg("認証失敗です", false) }
-                )
+                model.sendMsg("すぐ未来一覧を表示します", false)
+                Handler().postDelayed({
+                    showNikkiList()
+                }, 500)
+//                model.sendMsg("まず生体認証をしてください", false, ImageView(this).apply {
+//                    setImageResource(R.drawable.finger_print_logo)
+//                    minimumWidth = 0
+//                    minimumHeight = 0
+//                })
+//                fingerCheck(this,
+//                        { model.sendMsg("認証キャンセル", false) },
+//                        { model.sendMsg("非対応です", false) },
+//                        { model.sendMsg("その他のエラーです", false) },
+//                        {
+//                            model.sendMsg("認証成功です、すぐ未来一覧を表示します", false)
+//                            Handler().postDelayed({
+//                                showNikkiList()
+//                            }, 500)
+//                        },
+//                        { model.sendMsg("認証失敗です", false) }
+//                )
             }
         })
 
